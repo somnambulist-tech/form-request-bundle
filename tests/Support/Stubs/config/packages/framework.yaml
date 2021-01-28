@@ -1,0 +1,26 @@
+framework:
+    secret: '%env(APP_SECRET)%'
+    default_locale: en
+    http_method_override: true
+
+    test: true
+    session:
+        storage_id: session.storage.mock_file
+
+    router:
+        utf8: true
+
+security:
+    providers:
+        security_users:
+            id: Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Models\UserProvider
+
+    firewalls:
+        main:
+            anonymous: true
+            lazy: true
+
+    access_control:
+        - { path: ^/test/simple, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/test/nested, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/test/authenticated, roles: IS_AUTHENTICATED_FULLY }

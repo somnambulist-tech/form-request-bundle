@@ -1,0 +1,4 @@
+somnambulist_form_request:
+    subscribers:
+        authorization: true
+        form_validation: true

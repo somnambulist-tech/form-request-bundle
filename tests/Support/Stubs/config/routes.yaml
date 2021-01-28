@@ -1,0 +1,19 @@
+
+#
+# Resolver tests
+#
+
+test.simple_form:
+    path: /test/simple
+    controller: Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Controllers\ViewController::simpleFormAction
+    methods: GET|POST
+
+test.nested_form:
+    path: /test/nested
+    controller: Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Controllers\ViewController::nestedFormAction
+    methods: GET|POST
+
+test.authenticated:
+    path: /test/authenticated
+    controller: Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Controllers\ViewController::authenticatedAction
+    methods: GET|POST

@@ -1,0 +1,29 @@
+parameters:
+    locale: 'en'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Psr\Log\LoggerInterface:
+        alias: Symfony\Component\HttpKernel\Log\Logger
+
+    logger:
+        alias: Symfony\Component\HttpKernel\Log\Logger
+
+    Symfony\Component\HttpKernel\Log\Logger:
+        arguments:
+            - emergency
+
+    Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Models\UserProvider:
+        public: true
+
+    Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Controllers\:
+        resource: '../Controllers'
+        tags: ['controller.service_arguments']
+
+    Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Rules\UuidRule:
+        tags:
+            - { name: 'somnambulist.form_request_bundle.rule', rule_name: 'uuid' }

@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <defaults public="false" autowire="true" autoconfigure="true"/>
+
+        <!-- Services -->
+        <service id="Rakit\Validation\Validator" class="Rakit\Validation\Validator" />
+        <service
+            id="Somnambulist\Bundles\FormRequestBundle\Services\ControllerArgumentResolver"
+            class="Somnambulist\Bundles\FormRequestBundle\Services\ControllerArgumentResolver">
+            <tag name="controller.argument_value_resolver" priority="105" />
+        </service>
+
+        <!-- Event Subscribers -->
+        <service
+            id="Somnambulist\Bundles\FormRequestBundle\EventSubscribers\AccessDeniedExceptionSubscriber"
+            class="Somnambulist\Bundles\FormRequestBundle\EventSubscribers\AccessDeniedExceptionSubscriber" />
+        <service
+            id="Somnambulist\Bundles\FormRequestBundle\EventSubscribers\FormValidationExceptionSubscriber"
+            class="Somnambulist\Bundles\FormRequestBundle\EventSubscribers\FormValidationExceptionSubscriber" />
+    </services>
+</container>

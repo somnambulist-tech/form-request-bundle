@@ -1,0 +1,43 @@
+{
+    "name": "somnambulist/form-request-bundle",
+    "type": "library",
+    "description": "An extension to add a few useful features to SamJs Fractal bundle and exception conversion",
+    "keywords": [
+        "form request",
+        "symfony"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dave Redfern",
+            "email": "info@somnambulist.tech"
+        }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "rakit/validation": "^1.4",
+        "symfony/framework-bundle": "^5.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~9.5",
+        "ramsey/uuid": "~4.1",
+        "symfony/browser-kit": "~5.2",
+        "symfony/security-bundle": "^5.2",
+        "symfony/stopwatch": "~5.2",
+        "symfony/var-dumper": "~5.2",
+        "symfony/yaml": "~5.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Somnambulist\\Bundles\\FormRequestBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Somnambulist\\Bundles\\FormRequestBundle\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist"
+    }
+}
