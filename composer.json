@@ -1,7 +1,7 @@
 {
     "name": "somnambulist/form-request-bundle",
     "type": "library",
-    "description": "An extension to add a few useful features to SamJs Fractal bundle and exception conversion",
+    "description": "Adds Laravel like form requests for Symfony; based on adamsfr/form-request-bundle",
     "keywords": [
         "form request",
         "symfony"
