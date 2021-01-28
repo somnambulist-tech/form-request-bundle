@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Rules;
+namespace Somnambulist\Bundles\FormRequestBundle\Rules;
 
 use Rakit\Validation\Rule;
 use Ramsey\Uuid\Uuid;
@@ -8,8 +8,8 @@ use Ramsey\Uuid\Uuid;
 /**
  * Class UuidRule
  *
- * @package    Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Rules
- * @subpackage Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Rules\UuidRule
+ * @package    Somnambulist\Bundles\FormRequestBundle\Rules
+ * @subpackage Somnambulist\Bundles\FormRequestBundle\Rules\UuidRule
  */
 class UuidRule extends Rule
 {

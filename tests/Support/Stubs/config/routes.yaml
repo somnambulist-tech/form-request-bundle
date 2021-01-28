@@ -17,3 +17,8 @@ test.authenticated:
     path: /test/authenticated
     controller: Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Controllers\ViewController::authenticatedAction
     methods: GET|POST
+
+test.uploaded_file:
+    path: /test/upload
+    controller: Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Controllers\ViewController::uploadedFileAction
+    methods: GET|POST

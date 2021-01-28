@@ -23,7 +23,3 @@ services:
     Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Controllers\:
         resource: '../Controllers'
         tags: ['controller.service_arguments']
-
-    Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Rules\UuidRule:
-        tags:
-            - { name: 'somnambulist.form_request_bundle.rule', rule_name: 'uuid' }

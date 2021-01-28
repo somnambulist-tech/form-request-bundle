@@ -61,6 +61,23 @@ class FormRequestTest extends TestCase
         $this->assertEquals([], $form->get('this', []));
     }
 
+    public function testReturningQueryArrayElements()
+    {
+        $form = new UserFormRequest($r = Request::create('https://www.example.org/?param[]=1&param[]=100&param[]=bar'));
+
+        $this->assertEquals(['1', '100', 'bar'], $form->get('param'));
+
+        $this->assertEquals([], $form->get('bar', []));
+    }
+
+    public function testReturningRequestArrayElements()
+    {
+        $form = new UserFormRequest($r = Request::create('https://www.example.org/', 'POST', ['param' => ['1', '100', 'bar']]));
+
+        $this->assertEquals(['1', '100', 'bar'], $form->get('param'));
+        $this->assertEquals([], $form->get('params', []));
+    }
+
     public function testOnly()
     {
         $form = new UserFormRequest($r = Request::create('https://www.example.org/path/to/resource?min=0&max=100&foo=bar'));

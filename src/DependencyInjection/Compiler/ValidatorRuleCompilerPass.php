@@ -35,7 +35,7 @@ class ValidatorRuleCompilerPass implements CompilerPassInterface
             }
 
             foreach ($tags as $attributes) {
-                $validator->addMethodCall('addValidator', [$attributes['rule_name'], new Reference($id)]);
+                $validator->addMethodCall('setValidator', [$attributes['rule_name'], new Reference($id)]);
             }
         }
     }

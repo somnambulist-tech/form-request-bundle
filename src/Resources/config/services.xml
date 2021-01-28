@@ -14,6 +14,23 @@
             <tag name="controller.argument_value_resolver" priority="105" />
         </service>
 
+        <!-- Rules -->
+        <service
+            id="Somnambulist\Bundles\FormRequestBundle\Rules\UuidRule"
+            class="Somnambulist\Bundles\FormRequestBundle\Rules\UuidRule">
+            <tag name="somnambulist.form_request_bundle.rule" rule_name="uuid" />
+        </service>
+        <service
+            id="Somnambulist\Bundles\FormRequestBundle\Rules\RequiredRule"
+            class="Somnambulist\Bundles\FormRequestBundle\Rules\RequiredRule">
+            <tag name="somnambulist.form_request_bundle.rule" rule_name="required" />
+        </service>
+        <service
+            id="Somnambulist\Bundles\FormRequestBundle\Rules\UploadedFileRule"
+            class="Somnambulist\Bundles\FormRequestBundle\Rules\UploadedFileRule">
+            <tag name="somnambulist.form_request_bundle.rule" rule_name="uploaded_file" />
+        </service>
+
         <!-- Event Subscribers -->
         <service
             id="Somnambulist\Bundles\FormRequestBundle\EventSubscribers\AccessDeniedExceptionSubscriber"

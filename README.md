@@ -35,6 +35,14 @@ JSON response including the fields that failed validation and the rules and mess
 
 __Note:__ the subscribers are enabled by default.
 
+### Custom Rules
+
+This package includes 3 custom rules that are pre-registered with the validator:
+
+ * UuidRule - validates a UUID is valid and not NIL (all 0/zeros)
+ * RequiredRule - validates a field is required supporting Symfony UploadedFile files
+ * UploadedFileRule - validates an uploaded file supporting Symfony UploadedFile files
+
 ### Property Pass-Through
 
 The following `ParameterBag`s can be accessed via property accessors:
@@ -85,10 +93,6 @@ Validated data is stored in the `data` property and is accessible directly from 
 
 Alternatively: the original request data can be accessed via property pass-through or by calling
 `source()` to get the request object.
-
-Note that in a `FormRequest` the original requests `request` property is replaced with a `ParamterBag`
-to ensure that the `get()` implementation is always consistent and allows arrays to be returned
-irrespective of how the request was created.
 
 ### Using the Form Request
 
@@ -186,7 +190,7 @@ As rules are registered as services you can use other services for database or A
 
 See the `rakit` documentation for more details on how to pass arguments and the available rules.
 
-__Note:__ all rules must have unique names and by default the existing rules cannot be overridden.
+__Note:__ all rules must have unique names and same names will overwrite any pre-existing
 
 ## Tests
 

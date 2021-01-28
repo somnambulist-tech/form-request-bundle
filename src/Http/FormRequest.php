@@ -23,7 +23,7 @@ use Symfony\Component\Security\Core\Security;
  * @property FileBag         $files
  * @property HeaderBag       $headers
  * @property InputBag        $query
- * @property ParameterBag    $request
+ * @property InputBag        $request
  * @property ServerBag       $server
  * @property Session|null    $session
  * @property string|resource $content
@@ -36,9 +36,8 @@ abstract class FormRequest
 
     public function __construct(Request $request)
     {
-        $this->source          = $request;
-        $this->source->request = new ParameterBag($request->request->all());
-        $this->data            = new ParameterBag();
+        $this->source = $request;
+        $this->data   = new ParameterBag();
     }
 
     public function __get(string $name)
@@ -59,9 +58,10 @@ abstract class FormRequest
     /**
      * @param FormRequest $form
      * @param array       $data
+     *
      * @internal
      */
-    public static function appendValidationData(FormRequest $form, array $data): void
+    final public static function appendValidationData(FormRequest $form, array $data): void
     {
         $form->data = new ParameterBag($data);
     }
@@ -93,7 +93,7 @@ abstract class FormRequest
      *
      * @return array
      */
-    public function all(): array
+    final public function all(): array
     {
         $input = $this->source->request->all() + $this->source->query->all();
 
@@ -105,7 +105,7 @@ abstract class FormRequest
      *
      * @return ParameterBag
      */
-    public function data(): ParameterBag
+    final public function data(): ParameterBag
     {
         return $this->data;
     }
@@ -117,7 +117,7 @@ abstract class FormRequest
      *
      * @return bool
      */
-    public function has(string $key): bool
+    final public function has(string $key): bool
     {
         return $this->source->attributes->has($key) || $this->source->query->has($key) || $this->source->request->has($key);
     }
@@ -130,7 +130,7 @@ abstract class FormRequest
      *
      * @return mixed
      */
-    public function get(string $key, mixed $default = null): mixed
+    final public function get(string $key, mixed $default = null): mixed
     {
         return $this->source->get($key, $default);
     }
@@ -142,7 +142,7 @@ abstract class FormRequest
      *
      * @return ParameterBag
      */
-    public function only(string ...$key): ParameterBag
+    final public function only(string ...$key): ParameterBag
     {
         $bag = new ParameterBag();
 
@@ -158,7 +158,7 @@ abstract class FormRequest
      *
      * @return Request
      */
-    public function source(): Request
+    final public function source(): Request
     {
         return $this->source;
     }
