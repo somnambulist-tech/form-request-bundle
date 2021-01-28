@@ -1,7 +1,7 @@
 {
     "name": "somnambulist/form-request-bundle",
     "type": "library",
-    "description": "Adds Laravel like form requests for Symfony; based on adamsfr/form-request-bundle",
+    "description": "Adds Laravel like form requests for Symfony; based on adamsafr/form-request-bundle",
     "keywords": [
         "form request",
         "symfony"
