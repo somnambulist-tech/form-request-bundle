@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+2021-02-05
+----------
+
+ * add priority to event subscribers to ensure form-validation runs before api-bundle
+
 2021-01-28
 ----------
 
