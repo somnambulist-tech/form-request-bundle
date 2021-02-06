@@ -19,7 +19,7 @@ class FormValidationExceptionSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::EXCEPTION => ['onKernelException']
+            KernelEvents::EXCEPTION => ['onKernelException', 15]
         ];
     }
 
