@@ -3,6 +3,7 @@
 namespace Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Controllers;
 
 use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Forms\AuthenticatedFormRequest;
+use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Forms\MimesFormRequest;
 use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Forms\ProductFormRequest;
 use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Forms\UploadedFileFormRequest;
 use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Forms\UserFormRequest;
@@ -34,6 +35,11 @@ class ViewController extends AbstractController
     }
 
     public function uploadedFileAction(UploadedFileFormRequest $form)
+    {
+        return new JsonResponse(['file' => $form->data()->get('file')->getFilename()]);
+    }
+
+    public function mimesAction(MimesFormRequest $form)
     {
         return new JsonResponse(['file' => $form->data()->get('file')->getFilename()]);
     }

@@ -22,3 +22,8 @@ test.uploaded_file:
     path: /test/upload
     controller: Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Controllers\ViewController::uploadedFileAction
     methods: GET|POST
+
+test.mimes:
+    path: /test/mimes
+    controller: Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Controllers\ViewController::mimesAction
+    methods: GET|POST

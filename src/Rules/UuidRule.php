@@ -14,7 +14,7 @@ use Ramsey\Uuid\Uuid;
 class UuidRule extends Rule
 {
 
-    protected $message = 'The :attribute is not a valid UUID or is NIL';
+    protected $message = ':attribute is not a valid UUID or is NIL';
 
     public function check($value): bool
     {

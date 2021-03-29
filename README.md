@@ -37,11 +37,35 @@ __Note:__ the subscribers are enabled by default.
 
 ### Custom Rules
 
-This package includes 3 custom rules that are pre-registered with the validator:
+This package includes overrides for the following rules:
 
- * UuidRule - validates a UUID is valid and not NIL (all 0/zeros)
- * RequiredRule - validates a field is required supporting Symfony UploadedFile files
- * UploadedFileRule - validates an uploaded file supporting Symfony UploadedFile files
+ * required - validates a field is required supporting Symfony UploadedFile files
+ * uploaded_file - validates an uploaded file supporting Symfony UploadedFile files
+ * mimes - validates an uploaded file mime-type is one of the given extensions
+
+The following are additional rules:
+
+ * uuid - validates a UUID is valid and not NIL (all 0/zeros)
+ * string - validates that the value is a string via `is_string`
+ * prohibited - the field is prohibited always
+ * prohibited_if - the field is prohibited if, another field has a value
+ * prohibited_unless - the field is prohibited, unless the field has a value
+
+Example usage for prohibited:
+
+```php
+// the time is not allowed if the date is false or 0
+$rules = [
+    'date' => 'date',
+    'time' => 'prohibited_if:date,false,0'
+];
+
+// last is not allowed if first is not Bob
+$rules = [
+    'first' => 'required|string',
+    'last' => 'prohibited_unless:first,Bob'
+];
+```
 
 ### Property Pass-Through
 
