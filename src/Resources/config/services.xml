@@ -46,6 +46,11 @@
             <tag name="somnambulist.form_request_bundle.rule" rule_name="required" />
         </service>
         <service
+            id="Somnambulist\Bundles\FormRequestBundle\Rules\TypeFloatRule"
+            class="Somnambulist\Bundles\FormRequestBundle\Rules\TypeFloatRule">
+            <tag name="somnambulist.form_request_bundle.rule" rule_name="float" />
+        </service>
+        <service
             id="Somnambulist\Bundles\FormRequestBundle\Rules\TypeStringRule"
             class="Somnambulist\Bundles\FormRequestBundle\Rules\TypeStringRule">
             <tag name="somnambulist.form_request_bundle.rule" rule_name="string" />

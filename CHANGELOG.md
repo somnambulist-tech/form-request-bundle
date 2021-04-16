@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+2021-04-16
+----------
+
+ * add float rule to test for floating point numbers
+
 2021-03-29
 ----------
 
