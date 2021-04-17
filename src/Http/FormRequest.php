@@ -11,6 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ServerBag;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Security;
+use function array_combine;
+use function array_map;
+use function array_reduce;
+use function count;
 
 /**
  * Class FormRequest
@@ -154,6 +158,26 @@ abstract class FormRequest
     }
 
     /**
+     * Get all fields except those specified
+     *
+     * @param string ...$key
+     *
+     * @return ParameterBag
+     */
+    final public function without(string ...$key): ParameterBag
+    {
+        $bag = new ParameterBag();
+
+        foreach ($this->all() as $field => $value) {
+            if (!in_array($field, $key)) {
+                $bag->set($field, $value);
+            }
+        }
+
+        return $bag;
+    }
+
+    /**
      * The original Symfony Request
      *
      * @return Request
@@ -161,5 +185,41 @@ abstract class FormRequest
     final public function source(): Request
     {
         return $this->source;
+    }
+
+    /**
+     * Returns either null or, all the fields specified or the fields as an object
+     *
+     * Note: to use class, the fields must be in constructor order and the constructor must
+     * be simple scalars only. This will not hydrate a nested object.
+     *
+     * @param string       $bag     One of the parameter bags to fetch the value(s) from
+     * @param array        $fields  An array of fields required for this value
+     * @param string|null  $class   An optional class to instantiate using the fields
+     * @param bool         $subNull If true, substitutes null for missing fields
+     *
+     * @return mixed
+     */
+    final public function nullOrValue(string $bag, array $fields, string $class = null, bool $subNull = false): mixed
+    {
+        if (!$this->$bag instanceof ParameterBag) {
+            throw new InvalidArgumentException(sprintf('Bag "%s" is not a ParameterBag instance', $bag));
+        }
+
+        if (count($fields) === 1 && !$class) {
+            return $this->$bag->get(...$fields);
+        }
+
+        $allFieldsExists = (array_reduce($fields, fn ($c, $f) => $c + (int)$this->$bag->has($f)) === count($fields));
+
+        if (!$subNull and !$allFieldsExists) {
+            return null;
+        }
+
+        if ($class) {
+            return new $class(...array_map(fn ($f) => $this->$bag->get($f), $fields));
+        }
+
+        return array_combine($fields, array_map(fn ($f) => $this->$bag->get($f), $fields));
     }
 }

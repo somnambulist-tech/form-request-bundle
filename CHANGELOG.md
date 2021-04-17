@@ -5,6 +5,8 @@ Change Log
 ----------
 
  * add float rule to test for floating point numbers
+ * add `nullOrValue` to `FormRequest` to get many values as an array or object or null
+ * add `without` to `FormRequest` to get all parameters except those specified
 
 2021-03-29
 ----------

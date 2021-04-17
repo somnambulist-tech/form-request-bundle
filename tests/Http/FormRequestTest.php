@@ -6,6 +6,8 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Somnambulist\Bundles\FormRequestBundle\Http\FormRequest;
 use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Forms\UserFormRequest;
+use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Models\ExternalIdentity;
+use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Models\ValueObjectWithNulls;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -86,6 +88,15 @@ class FormRequestTest extends TestCase
         $this->assertCount(1, $form->only('foo'));
     }
 
+    public function testWithout()
+    {
+        $form = new UserFormRequest($r = Request::create('https://www.example.org/path/to/resource?min=0&max=100&foo=bar'));
+
+        $this->assertInstanceOf(ParameterBag::class, $form->without('foo', 'min'));
+        $this->assertCount(1, $p = $form->without('foo', 'min'));
+        $this->assertTrue($p->has('max'));
+    }
+
     public function testAll()
     {
         $form = new UserFormRequest($r = Request::create('https://www.example.org/path/to/resource?min=0&max=100&foo=bar', parameters: [
@@ -114,5 +125,76 @@ class FormRequestTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
 
         $form->bob;
+    }
+
+    public function testNullOrValue()
+    {
+        $form = new UserFormRequest(Request::create('/', 'GET', ['provider' => 'bob', 'identity' => 'foo']));
+        $var = $form->nullOrValue('query', ['provider']);
+
+        $this->assertEquals('bob', $var);
+    }
+
+    public function testNullOrValueFailsOnInvalidBag()
+    {
+        $form = new UserFormRequest(Request::create('/', 'GET', ['provider' => 'bob', 'identity' => 'foo']));
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $form->nullOrValue('content', ['provider']);
+    }
+
+    public function testNullOrValueReturnsAllFields()
+    {
+        $form = new UserFormRequest(Request::create('/', 'GET', ['provider' => 'bob', 'identity' => 'foo']));
+
+        $var = $form->nullOrValue('query', ['provider', 'identity']);
+
+        $this->assertIsArray($var);
+        $this->assertEquals(['provider' => 'bob', 'identity' => 'foo'], $var);
+    }
+
+    public function testNullOrValueReturnsNullIfMissingField()
+    {
+        $form = new UserFormRequest(Request::create('/', 'GET', ['provider' => 'bob']));
+
+        $var = $form->nullOrValue('query', ['provider', 'identity']);
+
+        $this->assertNull($var);
+    }
+
+    public function testNullOrValueIntoClass()
+    {
+        $form = new UserFormRequest(Request::create('/', 'GET', ['provider' => 'bob', 'identity' => 'foo']));
+
+        $var = $form->nullOrValue('query', ['provider', 'identity'], ExternalIdentity::class);
+
+        $this->assertInstanceOf(ExternalIdentity::class, $var);
+        $this->assertEquals('bob', $var->provider());
+        $this->assertEquals('foo', $var->identity());
+    }
+
+    public function testNullOrValueCanHydrateOptionalParametersWithNull()
+    {
+        $form = new UserFormRequest(Request::create('/', 'GET', ['name' => 'bob', 'phone' => '12345678990']));
+
+        $var = $form->nullOrValue('query', ['name', 'email', 'phone'], ValueObjectWithNulls::class, true);
+
+        $this->assertInstanceOf(ValueObjectWithNulls::class, $var);
+        $this->assertEquals('bob', $var->getName());
+        $this->assertNull($var->getEmail());
+        $this->assertEquals('12345678990', $var->getPhone());
+    }
+
+    public function testNullOrValueReturnsNullInArrayOfFields()
+    {
+        $form = new UserFormRequest(Request::create('/', 'GET', ['name' => 'bob', 'phone' => '12345678990']));
+
+        $var = $form->nullOrValue('query', ['name', 'email', 'phone'], subNull: true);
+
+        $this->assertIsArray($var);
+        $this->assertEquals('bob', $var['name']);
+        $this->assertNull($var['email']);
+        $this->assertEquals('12345678990', $var['phone']);
     }
 }
