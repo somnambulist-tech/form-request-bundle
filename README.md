@@ -1,6 +1,10 @@
 # Somnambulist Form Request Bundle
 
-[![GitHub Actions Build Status](https://github.com/somnambulist-tech/form-request-bundle/workflows/tests/badge.svg)](https://github.com/somnambulist-tech/form-request-bundle/actions?query=workflow%3Atests)
+[![GitHub Actions Build Status](https://img.shields.io/github/workflow/status/somnambulist-tech/form-request-bundle/tests?logo=github)](https://github.com/somnambulist-tech/form-request-bundle/actions?query=workflow%3Atests)
+[![Issues](https://img.shields.io/github/issues/somnambulist-tech/form-request-bundle?logo=github)](https://github.com/somnambulist-tech/form-request-bundle/issues)
+[![License](https://img.shields.io/github/license/somnambulist-tech/form-request-bundle?logo=github)](https://github.com/somnambulist-tech/form-request-bundle/blob/master/LICENSE)
+[![PHP Version](https://img.shields.io/packagist/php-v/somnambulist/form-request-bundle?logo=php&logoColor=white)](https://packagist.org/packages/somnambulist/form-request-bundle)
+[![Current Version](https://img.shields.io/packagist/v/somnambulist/form-request-bundle?logo=packagist&logoColor=white)](https://packagist.org/packages/somnambulist/form-request-bundle)
 
 An implementation of form requests from Laravel for Symfony based on the original work by
 [Adam Sapraliev](https://github.com/adamsafr/form-request-bundle).
