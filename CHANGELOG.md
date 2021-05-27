@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+2021-05-26
+----------
+
+ * fix type issue with UUID rule and fix issue where rule fails if value is empty/null
+
 2021-04-16
 ----------
 

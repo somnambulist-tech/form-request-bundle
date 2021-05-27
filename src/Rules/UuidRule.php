@@ -4,6 +4,7 @@ namespace Somnambulist\Bundles\FormRequestBundle\Rules;
 
 use Rakit\Validation\Rule;
 use Ramsey\Uuid\Uuid;
+use function is_null;
 
 /**
  * Class UuidRule
@@ -15,9 +16,10 @@ class UuidRule extends Rule
 {
 
     protected $message = ':attribute is not a valid UUID or is NIL';
+    protected $implicit = true;
 
     public function check($value): bool
     {
-        return Uuid::isValid($value) && $value !== Uuid::NIL;
+        return !is_null($value) && Uuid::isValid($value) && $value !== Uuid::NIL;
     }
 }
