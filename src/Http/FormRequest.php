@@ -11,10 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ServerBag;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Security;
-use function array_combine;
-use function array_map;
-use function array_reduce;
+use function array_key_exists;
+use function array_values;
 use function count;
+use function is_callable;
 
 /**
  * Class FormRequest
@@ -71,6 +71,16 @@ abstract class FormRequest
     }
 
     /**
+     * The original Symfony Request
+     *
+     * @return Request
+     */
+    final public function source(): Request
+    {
+        return $this->source;
+    }
+
+    /**
      * Determine if the user is authorized to make this request.
      *
      * @param Security $security
@@ -123,20 +133,26 @@ abstract class FormRequest
      */
     final public function has(string $key): bool
     {
-        return $this->source->attributes->has($key) || $this->source->query->has($key) || $this->source->request->has($key);
+        return
+            $this->arrayHas($this->source->attributes->all(), [$key])
+            ||
+            $this->arrayHas($this->source->query->all(), [$key])
+            ||
+            $this->arrayHas($this->source->request->all(), [$key])
+        ;
     }
 
     /**
      * Gets the key value from: attributes, query or request data
      *
      * @param string     $key
-     * @param mixed|null $default
+     * @param mixed|null $default Can be a callback to generate values
      *
      * @return mixed
      */
     final public function get(string $key, mixed $default = null): mixed
     {
-        return $this->source->get($key, $default);
+        return $this->arrayGet($this->all(), $key, $default);
     }
 
     /**
@@ -166,25 +182,11 @@ abstract class FormRequest
      */
     final public function without(string ...$key): ParameterBag
     {
-        $bag = new ParameterBag();
+        $data = $this->all();
 
-        foreach ($this->all() as $field => $value) {
-            if (!in_array($field, $key)) {
-                $bag->set($field, $value);
-            }
-        }
+        $this->forget($data, $key);
 
-        return $bag;
-    }
-
-    /**
-     * The original Symfony Request
-     *
-     * @return Request
-     */
-    final public function source(): Request
-    {
-        return $this->source;
+        return new ParameterBag($data);
     }
 
     /**
@@ -206,20 +208,134 @@ abstract class FormRequest
             throw new InvalidArgumentException(sprintf('Bag "%s" is not a ParameterBag instance', $bag));
         }
 
+        $data = $this->$bag->all();
+
         if (count($fields) === 1 && !$class) {
-            return $this->$bag->get(...$fields);
+            return $this->arrayGet($data, $fields[0]);
         }
 
-        $allFieldsExists = (array_reduce($fields, fn ($c, $f) => $c + (int)$this->$bag->has($f)) === count($fields));
-
-        if (!$subNull and !$allFieldsExists) {
+        if (!$subNull and !$this->arrayHas($data, $fields)) {
             return null;
         }
 
         if ($class) {
-            return new $class(...array_map(fn ($f) => $this->$bag->get($f), $fields));
+            return new $class(...array_values($this->arrayAll($data, $fields)));
         }
 
-        return array_combine($fields, array_map(fn ($f) => $this->$bag->get($f), $fields));
+        return $this->arrayAll($data, $fields);
+    }
+
+    private function arrayAll(array $array, array $keys): array
+    {
+        $ret = [];
+
+        foreach ($keys as $key) {
+            $ret[$key] = $this->arrayGet($array, $key);
+        }
+
+        return $ret;
+    }
+
+    /**
+     * Based on Laravel Arr::forget
+     * @link https://github.com/laravel/framework/blob/cf26e13fa45ac5d9e64ddd0c830ed78e56e3fd4d/src/Illuminate/Collections/Arr.php#L241
+     *
+     * @param array $array
+     * @param array $keys
+     *
+     * @return void
+     */
+    private function forget(array &$array, array $keys): void
+    {
+        $original = &$array;
+
+        if (count($keys) === 0) {
+            return;
+        }
+
+        foreach ($keys as $key) {
+            if (array_key_exists($key, $array)) {
+                unset($array[$key]);
+
+                continue;
+            }
+
+            $parts = explode('.', $key);
+
+            $array = &$original;
+
+            while (count($parts) > 1) {
+                $part = array_shift($parts);
+
+                if (isset($array[$part]) && is_array($array[$part])) {
+                    $array = &$array[$part];
+                } else {
+                    continue 2;
+                }
+            }
+
+            unset($array[array_shift($parts)]);
+        }
+    }
+
+    /**
+     * Based on Laravel Arr::get
+     * @link https://github.com/laravel/framework/blob/cf26e13fa45ac5d9e64ddd0c830ed78e56e3fd4d/src/Illuminate/Collections/Arr.php#L286
+     *
+     * @param array      $array
+     * @param string     $key
+     * @param mixed|null $default
+     *
+     * @return mixed
+     */
+    private function arrayGet(array $array, string $key, mixed $default = null): mixed
+    {
+        if (array_key_exists($key, $array)) {
+            return $array[$key];
+        }
+
+        foreach (explode('.', $key) as $segment) {
+            if (is_array($array) && array_key_exists($segment, $array)) {
+                $array = $array[$segment];
+            } else {
+                return is_callable($default) ? $default() : $default;
+            }
+        }
+
+        return $array;
+    }
+
+    /**
+     * Based on Laravel Arr::has
+     * @link https://github.com/laravel/framework/blob/cf26e13fa45ac5d9e64ddd0c830ed78e56e3fd4d/src/Illuminate/Collections/Arr.php#L322
+     *
+     * @param array $array
+     * @param array $keys
+     *
+     * @return bool
+     */
+    private function arrayHas(array $array, array $keys): bool
+    {
+        if (!$array || $keys === []) {
+            return false;
+        }
+
+        foreach ($keys as $key) {
+            $testArr = $array;
+
+            if (array_key_exists($key, $array)) {
+                continue;
+            }
+
+            foreach (explode('.', $key) as $segment) {
+                if (is_array($testArr) && array_key_exists($segment, $testArr)) {
+                    $testArr = $testArr[$segment];
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }

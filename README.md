@@ -50,6 +50,7 @@ This package includes overrides for the following rules:
 The following are additional rules:
 
  * uuid - validates a UUID is valid and not NIL (all 0/zeros)
+ * float - validates that the value is a floating point number
  * string - validates that the value is a string via `is_string`
  * prohibited - the field is prohibited always
  * prohibited_if - the field is prohibited if, another field has a value
@@ -144,20 +145,42 @@ class CreateUserController extends AbstractController
 }
 ```
 
+`FormRequests` support dot notation access to get to nested values. This can be used for single values,
+to check for deeply nested values easily or to extract a set of values into a value object or set.
+
+For example: to get a single value: `$form->get('user.address.line_1')` would get `line_1` from a user
+array that contains an address array.
+
+The behaviour of dot notation has several edge cases:
+
+ * `*` operator is not supported at this time,
+ * `only` will return a flattened `ParameterBag` with the dot notation keys
+ * `without` will return a `ParameterBag` with the original data without the specified keys
+
+Additionally:
+
+When using dot notation with `only` the result will be similar to `nullOrValue` with `subNull` as false
+however it may contain values from the request, query, or files. `nullOrValue` will only work with a
+single data source. If you require fine control use `nullOrValue`.
+
+When using dot notation with `without` the result will contain data from request, query, and files. As a
+`ParameterBag` is returned, there are no dot accessors.
+
 ### Authorizing a Form Request
 
 Form requests can have custom authorization checks; however this feature requires that Symfony Security
 has been implemented as the `security` service is required.
 
-To add custom auth checks override the `authorize()` method and add whatever checks are needed.
+To add custom auth checks override the `authorize()` method and add the necessary checks.
 
 The `authorize` method receives the current `Security` service that has access to the current user and
 the `isGranted()` method.
 
-For example, to require new users are made by an Admin user:
+For example, to require new users can only be made by an Admin user:
 
 ```php
-use Somnambulist\Bundles\FormRequestBundle\Http\FormRequest;use Symfony\Component\Security\Core\Security;
+use Somnambulist\Bundles\FormRequestBundle\Http\FormRequest;
+use Symfony\Component\Security\Core\Security;
 
 class NewUserFormRequest extends FormRequest
 {

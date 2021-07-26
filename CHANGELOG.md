@@ -1,6 +1,19 @@
 Change Log
 ==========
 
+2021-07-26
+----------
+
+ * add support for dot notation access on:
+   * `get`
+   * `has`
+   * `only`
+   * `without`
+   * `nullOrValue`
+   `only` will return a flattened array using the dot key names
+   `without` returns the original data structure in a ParameterBag instance
+ * default can now be a callback function
+
 2021-05-26
 ----------
 
