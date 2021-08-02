@@ -103,13 +103,13 @@ abstract class FormRequest
     }
 
     /**
-     * Returns all the request, query and file data in this request
+     * Returns all the query, request, and file data in this request
      *
      * @return array
      */
     final public function all(): array
     {
-        $input = $this->source->request->all() + $this->source->query->all();
+        $input = $this->source->query->all() + $this->source->request->all();
 
         return array_replace_recursive($input, $this->source->files->all());
     }
@@ -125,7 +125,7 @@ abstract class FormRequest
     }
 
     /**
-     * Returns true if the key exists in: attributes, query or request data
+     * Returns true if the key exists in: query, request, or file data
      *
      * @param string $key
      *
@@ -134,16 +134,16 @@ abstract class FormRequest
     final public function has(string $key): bool
     {
         return
-            $this->arrayHas($this->source->attributes->all(), [$key])
-            ||
             $this->arrayHas($this->source->query->all(), [$key])
             ||
             $this->arrayHas($this->source->request->all(), [$key])
+            ||
+            $this->arrayHas($this->source->files->all(), [$key])
         ;
     }
 
     /**
-     * Gets the key value from: attributes, query or request data
+     * Gets the key value from: query, request, or file data
      *
      * @param string     $key
      * @param mixed|null $default Can be a callback to generate values
@@ -156,7 +156,7 @@ abstract class FormRequest
     }
 
     /**
-     * Get only the specified keys in a new ParameterBag from attributes, query or request
+     * Get only the specified keys in a new ParameterBag from query, request, or file data
      *
      * @param string ...$key
      *
@@ -174,7 +174,7 @@ abstract class FormRequest
     }
 
     /**
-     * Get all fields except those specified
+     * Get all fields except those specified from query, request, or file data
      *
      * @param string ...$key
      *

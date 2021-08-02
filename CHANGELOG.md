@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+2021-08-02
+----------
+
+ * fix `has` to not check attributes and also check files
+ * fix `all` to fetch from query, request, files; same as `has` order
+
 2021-07-26
 ----------
 
