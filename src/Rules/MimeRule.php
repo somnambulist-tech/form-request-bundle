@@ -18,7 +18,6 @@ use function is_string;
  */
 class MimeRule extends Rule
 {
-
     /** @var string */
     protected $message = ':attribute file type must be :allowed_types';
 

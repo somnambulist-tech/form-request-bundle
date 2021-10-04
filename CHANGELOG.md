@@ -1,6 +1,15 @@
 Change Log
 ==========
 
+2021-10-04
+----------
+
+ * add `ValidatedDataBag` to hold validated data replacing the previous `ParameterBag`
+ * add `__call` to `FormRequest` for same items as `__get`
+ * refactor internals to make array helpers global functions
+ * dropped final from `nullOrValue` on `FormRequest` to allow overriding in certain cases
+ * require Symfony 5.3+
+
 2021-08-02
 ----------
 

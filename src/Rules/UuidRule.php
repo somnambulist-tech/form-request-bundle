@@ -14,7 +14,6 @@ use function is_null;
  */
 class UuidRule extends Rule
 {
-
     protected $message = ':attribute is not a valid UUID or is NIL';
     protected $implicit = true;
 

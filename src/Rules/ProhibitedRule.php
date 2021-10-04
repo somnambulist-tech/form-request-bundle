@@ -14,7 +14,6 @@ use Rakit\Validation\Rule;
  */
 class ProhibitedRule extends Rule
 {
-
     protected $message = ':attribute is not allowed';
 
     public function check($value): bool

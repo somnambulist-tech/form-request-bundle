@@ -13,7 +13,6 @@ use Rakit\Validation\ErrorBag;
  */
 class FormValidationException extends Exception
 {
-
     private ErrorBag $errors;
 
     public function __construct(ErrorBag $errors, string $message = 'The request data failed the validation rules')

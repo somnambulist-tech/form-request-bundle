@@ -12,7 +12,6 @@ use function array_map;
  */
 trait CanConvertValuesToBooleans
 {
-
     private function convertStringsToBoolean(array $values): array
     {
         return array_map(function ($value) {

@@ -15,7 +15,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class SomnambulistFormRequestBundle extends Bundle
 {
-
     public function build(ContainerBuilder $container)
     {
         $container->addCompilerPass(new ValidatorRuleCompilerPass());

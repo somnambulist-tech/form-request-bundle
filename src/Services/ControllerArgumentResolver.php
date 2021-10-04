@@ -20,14 +20,8 @@ use function is_a;
  */
 class ControllerArgumentResolver implements ArgumentValueResolverInterface
 {
-
-    private Validator $validator;
-    private ?Security $security;
-
-    public function __construct(Validator $validator, ?Security $security)
+    public function __construct(private Validator $validator, private ?Security $security)
     {
-        $this->validator = $validator;
-        $this->security  = $security;
     }
 
     public function supports(Request $request, ArgumentMetadata $argument)

@@ -5,6 +5,7 @@ namespace Somnambulist\Bundles\FormRequestBundle\EventSubscribers;
 use Somnambulist\Bundles\FormRequestBundle\Exceptions\FormValidationException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -15,7 +16,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class FormValidationExceptionSubscriber implements EventSubscriberInterface
 {
-
     public static function getSubscribedEvents()
     {
         return [
@@ -23,9 +23,9 @@ class FormValidationExceptionSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function onKernelException($event): void
+    public function onKernelException(ExceptionEvent $event): void
     {
-        if (!$event->isMasterRequest()) {
+        if (!$event->isMainRequest()) {
             return;
         }
 

@@ -20,7 +20,6 @@ use function trim;
  */
 class RequiredRule extends Rule
 {
-
     /** @var bool */
     protected $implicit = true;
 

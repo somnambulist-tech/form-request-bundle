@@ -20,7 +20,6 @@ use function ucwords;
  */
 class ValidatorRuleCompilerPass implements CompilerPassInterface
 {
-
     public const RULE_TAG_NAME = 'somnambulist.form_request_bundle.rule';
 
     public function process(ContainerBuilder $container): void

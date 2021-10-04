@@ -19,7 +19,6 @@ use function is_bool;
  */
 class ProhibitedIfRule extends Rule
 {
-
     use CanConvertValuesToBooleans;
 
     protected $message  = ':attribute is not allowed if :field has value(s) :values';

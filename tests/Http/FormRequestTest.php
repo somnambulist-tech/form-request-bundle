@@ -2,9 +2,11 @@
 
 namespace Somnambulist\Bundles\FormRequestBundle\Tests\Http;
 
+use BadMethodCallException;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Somnambulist\Bundles\FormRequestBundle\Http\FormRequest;
+use Somnambulist\Bundles\FormRequestBundle\Http\ValidatedDataBag;
 use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Forms\UserFormRequest;
 use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Models\Address;
 use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Models\ExternalIdentity;
@@ -30,6 +32,12 @@ class FormRequestTest extends TestCase
         $this->assertSame($r->attributes, $form->attributes);
         $this->assertSame($r->files, $form->files);
         $this->assertSame($r->server, $form->server);
+
+        $this->assertSame($r->query, $form->query());
+        $this->assertSame($r->request, $form->request());
+        $this->assertSame($r->attributes, $form->attributes());
+        $this->assertSame($r->files, $form->files());
+        $this->assertSame($r->server, $form->server());
     }
 
     public function testMagicContentPassThrough()
@@ -37,6 +45,7 @@ class FormRequestTest extends TestCase
         $form = new UserFormRequest($r = Request::create('https://www.example.org/path/to/resource?min=0&max=100&foo=bar', content: 'this=that'));
 
         $this->assertSame($r->getContent(), $form->content);
+        $this->assertSame($r->getContent(), $form->content());
     }
 
     public function testSource()
@@ -159,6 +168,7 @@ class FormRequestTest extends TestCase
 
         FormRequest::appendValidationData($form, $e = ['this' => 'that']);
 
+        $this->assertInstanceOf(ValidatedDataBag::class, $form->data());
         $this->assertEquals($e, $form->data()->all());
     }
 
@@ -169,6 +179,15 @@ class FormRequestTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
 
         $form->bob;
+    }
+
+    public function testMagicFailsForUnsupportedMethods()
+    {
+        $form = new UserFormRequest(Request::create('https://www.example.org'));
+
+        $this->expectException(BadMethodCallException::class);
+
+        $form->bob();
     }
 
     public function testNullOrValue()

@@ -74,7 +74,7 @@ $rules = [
 
 ### Property Pass-Through
 
-The following `ParameterBag`s can be accessed via property accessors:
+The following `ParameterBag`s can be accessed via property accessors or method calls:
 
  * attributes
  * cookies
@@ -118,7 +118,10 @@ class NewUserFormRequest extends FormRequest
 }
 ```
 
-Validated data is stored in the `data` property and is accessible directly from the controller.
+Validated data is stored in the `data` property and is accessible directly from the controller. From
+version 1.5.0 this is a `ValidatedDataBag`, previously it was a `ParameterBag`. The data bag supports
+dot notation access to keys (with the same restrictions as the main FormRequest) along with `nullOrValue`
+and several other methods for keys, values, and filtering by callback.
 
 Alternatively: the original request data can be accessed via property pass-through or by calling
 `source()` to get the request object.

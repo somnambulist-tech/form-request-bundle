@@ -2,7 +2,9 @@
 
 namespace Somnambulist\Bundles\FormRequestBundle\Http;
 
+use BadMethodCallException;
 use InvalidArgumentException;
+use Somnambulist\Bundles\FormRequestBundle\Http\Behaviours\GetNullOrValue;
 use Symfony\Component\HttpFoundation\FileBag;
 use Symfony\Component\HttpFoundation\HeaderBag;
 use Symfony\Component\HttpFoundation\InputBag;
@@ -11,10 +13,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ServerBag;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Security;
-use function array_key_exists;
-use function array_values;
-use function count;
-use function is_callable;
+use function in_array;
+use function Somnambulist\Bundles\FormRequestBundle\Resources\arrayGet;
+use function Somnambulist\Bundles\FormRequestBundle\Resources\arrayHas;
+use function Somnambulist\Bundles\FormRequestBundle\Resources\forget;
 
 /**
  * Class FormRequest
@@ -31,22 +33,49 @@ use function is_callable;
  * @property ServerBag       $server
  * @property Session|null    $session
  * @property string|resource $content
+ *
+ * @method ParameterBag    attributes()
+ * @method InputBag        cookies()
+ * @method FileBag         files()
+ * @method HeaderBag       headers()
+ * @method InputBag        query()
+ * @method InputBag        request()
+ * @method ServerBag       server()
+ * @method Session|null    session()
+ * @method string|resource content()
  */
 abstract class FormRequest
 {
+    use GetNullOrValue;
 
-    private Request      $source;
-    private ParameterBag $data;
+    private Request $source;
+    private ValidatedDataBag $data;
+    private array $passThrough = ['attributes', 'cookies', 'files', 'headers', 'query', 'request', 'server'];
 
     public function __construct(Request $request)
     {
         $this->source = $request;
-        $this->data   = new ParameterBag();
+        $this->data   = new ValidatedDataBag();
+    }
+
+    public function __call(string $name, array $arguments)
+    {
+        if (in_array($name, $this->passThrough)) {
+            return $this->source->$name;
+        }
+        if ('session' === $name) {
+            return $this->source->getSession();
+        }
+        if ('content' === $name) {
+            return $this->source->getContent();
+        }
+
+        throw new BadMethodCallException(sprintf('Method "%s" does not exist', $name));
     }
 
     public function __get(string $name)
     {
-        if (in_array($name, ['attributes', 'cookies', 'files', 'headers', 'query', 'request', 'server'])) {
+        if (in_array($name, $this->passThrough)) {
             return $this->source->$name;
         }
         if ('session' === $name) {
@@ -67,7 +96,7 @@ abstract class FormRequest
      */
     final public static function appendValidationData(FormRequest $form, array $data): void
     {
-        $form->data = new ParameterBag($data);
+        $form->data = new ValidatedDataBag($data);
     }
 
     /**
@@ -116,51 +145,36 @@ abstract class FormRequest
 
     /**
      * Returns only the validated data
-     *
-     * @return ParameterBag
      */
-    final public function data(): ParameterBag
+    final public function data(): ValidatedDataBag
     {
         return $this->data;
     }
 
     /**
      * Returns true if the key exists in: query, request, or file data
-     *
-     * @param string $key
-     *
-     * @return bool
      */
     final public function has(string $key): bool
     {
         return
-            $this->arrayHas($this->source->query->all(), [$key])
+            arrayHas($this->source->query->all(), [$key])
             ||
-            $this->arrayHas($this->source->request->all(), [$key])
+            arrayHas($this->source->request->all(), [$key])
             ||
-            $this->arrayHas($this->source->files->all(), [$key])
+            arrayHas($this->source->files->all(), [$key])
         ;
     }
 
     /**
      * Gets the key value from: query, request, or file data
-     *
-     * @param string     $key
-     * @param mixed|null $default Can be a callback to generate values
-     *
-     * @return mixed
      */
     final public function get(string $key, mixed $default = null): mixed
     {
-        return $this->arrayGet($this->all(), $key, $default);
+        return arrayGet($this->all(), $key, $default);
     }
 
     /**
      * Get only the specified keys in a new ParameterBag from query, request, or file data
-     *
-     * @param string ...$key
-     *
-     * @return ParameterBag
      */
     final public function only(string ...$key): ParameterBag
     {
@@ -175,16 +189,12 @@ abstract class FormRequest
 
     /**
      * Get all fields except those specified from query, request, or file data
-     *
-     * @param string ...$key
-     *
-     * @return ParameterBag
      */
     final public function without(string ...$key): ParameterBag
     {
         $data = $this->all();
 
-        $this->forget($data, $key);
+        forget($data, $key);
 
         return new ParameterBag($data);
     }
@@ -202,140 +212,12 @@ abstract class FormRequest
      *
      * @return mixed
      */
-    final public function nullOrValue(string $bag, array $fields, string $class = null, bool $subNull = false): mixed
+    public function nullOrValue(string $bag, array $fields, string $class = null, bool $subNull = false): mixed
     {
         if (!$this->$bag instanceof ParameterBag) {
             throw new InvalidArgumentException(sprintf('Bag "%s" is not a ParameterBag instance', $bag));
         }
 
-        $data = $this->$bag->all();
-
-        if (count($fields) === 1 && !$class) {
-            return $this->arrayGet($data, $fields[0]);
-        }
-
-        if (!$subNull and !$this->arrayHas($data, $fields)) {
-            return null;
-        }
-
-        if ($class) {
-            return new $class(...array_values($this->arrayAll($data, $fields)));
-        }
-
-        return $this->arrayAll($data, $fields);
-    }
-
-    private function arrayAll(array $array, array $keys): array
-    {
-        $ret = [];
-
-        foreach ($keys as $key) {
-            $ret[$key] = $this->arrayGet($array, $key);
-        }
-
-        return $ret;
-    }
-
-    /**
-     * Based on Laravel Arr::forget
-     * @link https://github.com/laravel/framework/blob/cf26e13fa45ac5d9e64ddd0c830ed78e56e3fd4d/src/Illuminate/Collections/Arr.php#L241
-     *
-     * @param array $array
-     * @param array $keys
-     *
-     * @return void
-     */
-    private function forget(array &$array, array $keys): void
-    {
-        $original = &$array;
-
-        if (count($keys) === 0) {
-            return;
-        }
-
-        foreach ($keys as $key) {
-            if (array_key_exists($key, $array)) {
-                unset($array[$key]);
-
-                continue;
-            }
-
-            $parts = explode('.', $key);
-
-            $array = &$original;
-
-            while (count($parts) > 1) {
-                $part = array_shift($parts);
-
-                if (isset($array[$part]) && is_array($array[$part])) {
-                    $array = &$array[$part];
-                } else {
-                    continue 2;
-                }
-            }
-
-            unset($array[array_shift($parts)]);
-        }
-    }
-
-    /**
-     * Based on Laravel Arr::get
-     * @link https://github.com/laravel/framework/blob/cf26e13fa45ac5d9e64ddd0c830ed78e56e3fd4d/src/Illuminate/Collections/Arr.php#L286
-     *
-     * @param array      $array
-     * @param string     $key
-     * @param mixed|null $default
-     *
-     * @return mixed
-     */
-    private function arrayGet(array $array, string $key, mixed $default = null): mixed
-    {
-        if (array_key_exists($key, $array)) {
-            return $array[$key];
-        }
-
-        foreach (explode('.', $key) as $segment) {
-            if (is_array($array) && array_key_exists($segment, $array)) {
-                $array = $array[$segment];
-            } else {
-                return is_callable($default) ? $default() : $default;
-            }
-        }
-
-        return $array;
-    }
-
-    /**
-     * Based on Laravel Arr::has
-     * @link https://github.com/laravel/framework/blob/cf26e13fa45ac5d9e64ddd0c830ed78e56e3fd4d/src/Illuminate/Collections/Arr.php#L322
-     *
-     * @param array $array
-     * @param array $keys
-     *
-     * @return bool
-     */
-    private function arrayHas(array $array, array $keys): bool
-    {
-        if (!$array || $keys === []) {
-            return false;
-        }
-
-        foreach ($keys as $key) {
-            $testArr = $array;
-
-            if (array_key_exists($key, $array)) {
-                continue;
-            }
-
-            foreach (explode('.', $key) as $segment) {
-                if (is_array($testArr) && array_key_exists($segment, $testArr)) {
-                    $testArr = $testArr[$segment];
-                } else {
-                    return false;
-                }
-            }
-        }
-
-        return true;
+        return $this->doGetNullOrValue($this->$bag->all(), $fields, $class, $subNull);
     }
 }

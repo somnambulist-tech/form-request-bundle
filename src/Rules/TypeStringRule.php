@@ -12,7 +12,6 @@ use Rakit\Validation\Rule;
  */
 class TypeStringRule extends Rule
 {
-
     protected $message = ':attribute must be a string';
 
     public function check($value): bool
