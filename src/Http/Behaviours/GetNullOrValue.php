@@ -7,6 +7,7 @@ use function count;
 use function Somnambulist\Bundles\FormRequestBundle\Resources\arrayAll;
 use function Somnambulist\Bundles\FormRequestBundle\Resources\arrayGet;
 use function Somnambulist\Bundles\FormRequestBundle\Resources\arrayHas;
+use function Somnambulist\Bundles\FormRequestBundle\Resources\arrayHasWithValue;
 use function sprintf;
 
 /**
@@ -36,7 +37,7 @@ trait GetNullOrValue
             return arrayGet($data, $fields[0]);
         }
 
-        if (!$subNull and !arrayHas($data, $fields)) {
+        if (!$subNull && (!arrayHas($data, $fields) || !arrayHasWithValue($data, $fields))) {
             return null;
         }
 

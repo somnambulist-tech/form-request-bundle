@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+2021-10-06
+----------
+
+ * add `prune()` to `ValidatedDataBag` to remove empty values
+ * add `value()` to `ValidatedDataBag` to return default if the key exists but is empty
+ * add additional check to `GetNullOrValue` to check if the array values are empty or not
+
 2021-10-04
 ----------
 

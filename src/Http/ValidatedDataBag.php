@@ -100,6 +100,29 @@ class ValidatedDataBag implements Countable, IteratorAggregate
         return new self($values);
     }
 
+    /**
+     * Remove all empty values where empty is false, null, 0
+     */
+    public function prune(): self
+    {
+        return $this->filter();
+    }
+
+    /**
+     * Return the value for key, or the default if the keys value is empty
+     */
+    public function value(string $key, mixed $default = null): mixed
+    {
+        if (!$val = $this->get($key)) {
+            return $default;
+        }
+
+        return $val;
+    }
+
+    /**
+     * Return only the values as a new bag
+     */
     public function values(): self
     {
         return new self(array_values($this->params));

@@ -105,6 +105,15 @@ class ValidatedDataBagTest extends TestCase
         $this->assertEquals('foo', $var->identity());
     }
 
+    public function testNullOrValueIntoClassReturnsNullWithEmptyValuesByDefault()
+    {
+        $data = new ValidatedDataBag(['provider' => 'bob', 'identity' => null]);
+
+        $var = $data->nullOrValue(['provider', 'identity'], ExternalIdentity::class);
+
+        $this->assertNull($var);
+    }
+
     public function testNullOrValueCanHydrateOptionalParametersWithNull()
     {
         $data = new ValidatedDataBag(['name' => 'bob', 'phone' => '12345678990']);

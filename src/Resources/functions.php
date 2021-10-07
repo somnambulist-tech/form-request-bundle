@@ -115,3 +115,25 @@ function arrayHas(array $array, array $keys): bool
 
     return true;
 }
+
+
+/**
+ * @param array $array
+ * @param array $keys
+ *
+ * @return bool
+ */
+function arrayHasWithValue(array $array, array $keys): bool
+{
+    if (!$array || $keys === []) {
+        return false;
+    }
+
+    $hasValue = true;
+
+    foreach ($keys as $key) {
+        $hasValue = $hasValue && arrayGet($array, $key);
+    }
+
+    return $hasValue;
+}
