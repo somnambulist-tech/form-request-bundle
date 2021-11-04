@@ -139,7 +139,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CreateUserController extends AbstractController
 {
-
     public function __invoke(NewUserFormRequest $form)
     {
         // handle request
@@ -168,6 +167,13 @@ single data source. If you require fine control use `nullOrValue`.
 
 When using dot notation with `without` the result will contain data from request, query, and files. As a
 `ParameterBag` is returned, there are no dot accessors.
+
+Optionally:
+
+If you make use of [api-bundle](https://github.com/somnambulist-tech/api-bundle) and document query
+arguments that should not be treated as part of the validated data (e.g. page/per_page etc); these
+can be excluded from the validated data by overriding the `$ignore` property with the set of key names
+that should be excluded from the validated data.
 
 ### Authorizing a Form Request
 
@@ -220,7 +226,6 @@ use Ramsey\Uuid\Uuid;
 
 class UuidRule extends Rule
 {
-
     protected $message = 'The :attribute is not a valid UUID or is NIL';
 
     public function check($value): bool

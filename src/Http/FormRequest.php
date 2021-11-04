@@ -52,6 +52,15 @@ abstract class FormRequest
     private ValidatedDataBag $data;
     private array $passThrough = ['attributes', 'cookies', 'files', 'headers', 'query', 'request', 'server'];
 
+    /**
+     * A set of keys to automatically remove from the validated data
+     *
+     * For example: if some keys are only added for documentation but should not be in the
+     * actual data array, they can be set here and the validated data will only contain
+     * what is needed.
+     */
+    protected array $ignore = [];
+
     public function __construct(Request $request)
     {
         $this->source = $request;
@@ -96,6 +105,8 @@ abstract class FormRequest
      */
     final public static function appendValidationData(FormRequest $form, array $data): void
     {
+        forget($data, $form->ignore);
+
         $form->data = new ValidatedDataBag($data);
     }
 

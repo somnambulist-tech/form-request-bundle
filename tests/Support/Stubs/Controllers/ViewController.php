@@ -5,6 +5,7 @@ namespace Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Controllers
 use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Forms\AuthenticatedFormRequest;
 use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Forms\MimesFormRequest;
 use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Forms\ProductFormRequest;
+use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Forms\SearchUsersFormRequest;
 use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Forms\UploadedFileFormRequest;
 use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Forms\UserFormRequest;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -42,5 +43,14 @@ class ViewController extends AbstractController
     public function mimesAction(MimesFormRequest $form)
     {
         return new JsonResponse(['file' => $form->data()->get('file')->getFilename()]);
+    }
+
+    public function ignoreAction(SearchUsersFormRequest $form)
+    {
+        return new JsonResponse(
+            $form->data()->prune()->all(),
+            200,
+            ['X-Page' => $form->get('page'), 'X-PerPage' => $form->get('per_page')]
+        );
     }
 }

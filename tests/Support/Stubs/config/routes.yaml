@@ -27,3 +27,8 @@ test.mimes:
     path: /test/mimes
     controller: Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Controllers\ViewController::mimesAction
     methods: GET|POST
+
+test.ignore_keys:
+    path: /test/ignore_keys
+    controller: Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Controllers\ViewController::ignoreAction
+    methods: GET

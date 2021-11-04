@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+2021-11-04
+----------
+
+ * add `ignore` to `FormRequest` to allow excluding keys from the validated data array
+
 2021-10-06
 ----------
 
