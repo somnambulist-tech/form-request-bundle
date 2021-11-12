@@ -20,7 +20,7 @@ class FloatRuleTest extends KernelTestCase
     public function testFloat()
     {
         /** @var Validator $validator */
-        $validator = self::$container->get(Validator::class);
+        $validator = self::getContainer()->get(Validator::class);
 
         $res = $validator->validate(
             [
@@ -43,7 +43,7 @@ class FloatRuleTest extends KernelTestCase
 
     public function testFloatWithLongFloats()
     {
-        $validator = self::$container->get(Validator::class);
+        $validator = self::getContainer()->get(Validator::class);
 
         $res = $validator->validate(
             [

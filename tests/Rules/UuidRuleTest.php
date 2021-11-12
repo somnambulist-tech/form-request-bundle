@@ -21,7 +21,7 @@ class UuidRuleTest extends KernelTestCase
     public function testUuid()
     {
         /** @var Validator $validator */
-        $validator = self::$container->get(Validator::class);
+        $validator = self::getContainer()->get(Validator::class);
 
         $res = $validator->validate(
             [
@@ -38,7 +38,7 @@ class UuidRuleTest extends KernelTestCase
     public function testFailsOnNullOrNotString()
     {
         /** @var Validator $validator */
-        $validator = self::$container->get(Validator::class);
+        $validator = self::getContainer()->get(Validator::class);
 
         $res = $validator->validate(
             [
@@ -66,7 +66,7 @@ class UuidRuleTest extends KernelTestCase
     public function testFailsForNIL()
     {
         /** @var Validator $validator */
-        $validator = self::$container->get(Validator::class);
+        $validator = self::getContainer()->get(Validator::class);
 
         $res = $validator->validate(
             [

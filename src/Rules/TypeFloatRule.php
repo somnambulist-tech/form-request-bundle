@@ -25,7 +25,7 @@ class TypeFloatRule extends Rule
         if ('double' === gettype($value)) {
             return true;
         } else {
-            return preg_match('/^\\d+\\.\\d+$/', $value) === 1;
+            return preg_match('/^\\d+\\.\\d+$/', (string)$value) === 1;
         }
     }
 }

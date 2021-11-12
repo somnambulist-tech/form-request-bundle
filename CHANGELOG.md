@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+2021-11-12
+----------
+
+ * fix force float value to string in `preg_match()` to avoid type errors
+
 2021-11-04
 ----------
 

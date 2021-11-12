@@ -19,7 +19,7 @@ class ProhibitedRuleTest extends KernelTestCase
 
     public function testProhibited()
     {
-        $validator = self::$container->get(Validator::class);
+        $validator = self::getContainer()->get(Validator::class);
 
         $res = $validator->validate(
             [
@@ -37,7 +37,7 @@ class ProhibitedRuleTest extends KernelTestCase
 
     public function testProhibitedIf()
     {
-        $validator = self::$container->get(Validator::class);
+        $validator = self::getContainer()->get(Validator::class);
 
         $res = $validator->validate(
             [
@@ -106,7 +106,7 @@ class ProhibitedRuleTest extends KernelTestCase
 
     public function testProhibitedUnless()
     {
-        $validator = self::$container->get(Validator::class);
+        $validator = self::getContainer()->get(Validator::class);
 
         $res = $validator->validate(
             [
