@@ -2,9 +2,9 @@
 
 namespace Somnambulist\Bundles\FormRequestBundle\Tests\Rules;
 
-use Rakit\Validation\Validator;
 use Ramsey\Uuid\Uuid;
 use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Behaviours\BootKernel;
+use Somnambulist\Components\Validation\Factory;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -20,8 +20,7 @@ class UuidRuleTest extends KernelTestCase
 
     public function testUuid()
     {
-        /** @var Validator $validator */
-        $validator = self::getContainer()->get(Validator::class);
+        $validator = self::getContainer()->get(Factory::class);
 
         $res = $validator->validate(
             [
@@ -37,8 +36,8 @@ class UuidRuleTest extends KernelTestCase
 
     public function testFailsOnNullOrNotString()
     {
-        /** @var Validator $validator */
-        $validator = self::getContainer()->get(Validator::class);
+        /** @var Factory $validator */
+        $validator = self::getContainer()->get(Factory::class);
 
         $res = $validator->validate(
             [
@@ -65,8 +64,7 @@ class UuidRuleTest extends KernelTestCase
 
     public function testFailsForNIL()
     {
-        /** @var Validator $validator */
-        $validator = self::getContainer()->get(Validator::class);
+        $validator = self::getContainer()->get(Factory::class);
 
         $res = $validator->validate(
             [

@@ -3,9 +3,9 @@
 namespace Somnambulist\Bundles\FormRequestBundle\Tests\Services;
 
 use PHPUnit\Framework\TestCase;
-use Rakit\Validation\Validator;
 use Somnambulist\Bundles\FormRequestBundle\Http\FormRequest;
 use Somnambulist\Bundles\FormRequestBundle\Services\ControllerArgumentResolver;
+use Somnambulist\Components\Validation\Factory;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
@@ -27,7 +27,7 @@ class ControllerArgumentResolverTest extends TestCase
         $container->set('security.token_storage', new TokenStorage());
 
         $resolver = new ControllerArgumentResolver(
-            new Validator(), new Security($container)
+            new Factory(), new Security($container)
         );
         $form = $resolver
             ->resolve(

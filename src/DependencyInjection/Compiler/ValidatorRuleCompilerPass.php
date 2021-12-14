@@ -2,8 +2,8 @@
 
 namespace Somnambulist\Bundles\FormRequestBundle\DependencyInjection\Compiler;
 
-use Rakit\Validation\Validator;
 use ReflectionClass;
+use Somnambulist\Components\Validation\Factory;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -24,7 +24,7 @@ class ValidatorRuleCompilerPass implements CompilerPassInterface
 
     public function process(ContainerBuilder $container): void
     {
-        $validator = $container->getDefinition(Validator::class);
+        $validator = $container->getDefinition(Factory::class);
 
         foreach ($container->findTaggedServiceIds(self::RULE_TAG_NAME) as $id => $tags) {
             $tags = array_filter($tags);
@@ -34,7 +34,7 @@ class ValidatorRuleCompilerPass implements CompilerPassInterface
             }
 
             foreach ($tags as $attributes) {
-                $validator->addMethodCall('setValidator', [$attributes['rule_name'], new Reference($id)]);
+                $validator->addMethodCall('addRule', [$attributes['rule_name'], new Reference($id)]);
             }
         }
     }

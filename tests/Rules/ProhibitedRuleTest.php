@@ -2,8 +2,8 @@
 
 namespace Somnambulist\Bundles\FormRequestBundle\Tests\Rules;
 
-use Rakit\Validation\Validator;
 use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Behaviours\BootKernel;
+use Somnambulist\Components\Validation\Factory;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -19,7 +19,7 @@ class ProhibitedRuleTest extends KernelTestCase
 
     public function testProhibited()
     {
-        $validator = self::getContainer()->get(Validator::class);
+        $validator = self::getContainer()->get(Factory::class);
 
         $res = $validator->validate(
             [
@@ -37,7 +37,7 @@ class ProhibitedRuleTest extends KernelTestCase
 
     public function testProhibitedIf()
     {
-        $validator = self::getContainer()->get(Validator::class);
+        $validator = self::getContainer()->get(Factory::class);
 
         $res = $validator->validate(
             [
@@ -50,7 +50,7 @@ class ProhibitedRuleTest extends KernelTestCase
         );
 
         $this->assertFalse($res->passes());
-        $this->assertEquals('bar is not allowed if foo has value(s) \'bar\'', $res->errors()->get('bar')['prohibited_if']);
+        $this->assertEquals('bar is not allowed if foo has value(s) "bar"', $res->errors()->get('bar')['prohibited_if']);
 
         $res = $validator->validate(
             [
@@ -75,7 +75,7 @@ class ProhibitedRuleTest extends KernelTestCase
         );
 
         $this->assertFalse($res->passes());
-        $this->assertEquals('bar is not allowed if foo has value(s) \'true\'', $res->errors()->get('bar')['prohibited_if']);
+        $this->assertEquals('bar is not allowed if foo has value(s) "true"', $res->errors()->get('bar')['prohibited_if']);
 
         $res = $validator->validate(
             [
@@ -88,7 +88,7 @@ class ProhibitedRuleTest extends KernelTestCase
         );
 
         $this->assertFalse($res->passes());
-        $this->assertEquals('bar is not allowed if foo has value(s) \'false\'', $res->errors()->get('bar')['prohibited_if']);
+        $this->assertEquals('bar is not allowed if foo has value(s) "false"', $res->errors()->get('bar')['prohibited_if']);
 
         $res = $validator->validate(
             [
@@ -101,12 +101,12 @@ class ProhibitedRuleTest extends KernelTestCase
         );
 
         $this->assertFalse($res->passes());
-        $this->assertEquals('bar is not allowed if foo has value(s) \'bar\', \'baz\', or \'foo\'', $res->errors()->get('bar')['prohibited_if']);
+        $this->assertEquals('bar is not allowed if foo has value(s) "bar", "baz", "foo"', $res->errors()->get('bar')['prohibited_if']);
     }
 
     public function testProhibitedUnless()
     {
-        $validator = self::getContainer()->get(Validator::class);
+        $validator = self::getContainer()->get(Factory::class);
 
         $res = $validator->validate(
             [
@@ -131,7 +131,7 @@ class ProhibitedRuleTest extends KernelTestCase
         );
 
         $this->assertFalse($res->passes());
-        $this->assertEquals('bar is not allowed if foo does not have value(s) \'bar\'', $res->errors()->get('bar')['prohibited_unless']);
+        $this->assertEquals('bar is not allowed if foo does not have value(s) "bar"', $res->errors()->get('bar')['prohibited_unless']);
 
         $res = $validator->validate(
             [
@@ -156,7 +156,7 @@ class ProhibitedRuleTest extends KernelTestCase
         );
 
         $this->assertFalse($res->passes());
-        $this->assertEquals('bar is not allowed if foo does not have value(s) \'false\'', $res->errors()->get('bar')['prohibited_unless']);
+        $this->assertEquals('bar is not allowed if foo does not have value(s) "false"', $res->errors()->get('bar')['prohibited_unless']);
 
         $res = $validator->validate(
             [
@@ -169,6 +169,6 @@ class ProhibitedRuleTest extends KernelTestCase
         );
 
         $this->assertFalse($res->passes());
-        $this->assertEquals('bar is not allowed if foo does not have value(s) \'bar\', \'baz\', or \'foo\'', $res->errors()->get('bar')['prohibited_unless']);
+        $this->assertEquals('bar is not allowed if foo does not have value(s) "bar", "baz", "foo"', $res->errors()->get('bar')['prohibited_unless']);
     }
 }

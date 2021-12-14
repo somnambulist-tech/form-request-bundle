@@ -2,8 +2,8 @@
 
 namespace Somnambulist\Bundles\FormRequestBundle\Tests\Rules;
 
-use Rakit\Validation\Validator;
 use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Behaviours\BootKernel;
+use Somnambulist\Components\Validation\Factory;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -19,8 +19,8 @@ class FloatRuleTest extends KernelTestCase
 
     public function testFloat()
     {
-        /** @var Validator $validator */
-        $validator = self::getContainer()->get(Validator::class);
+        /** @var Factory $validator */
+        $validator = self::getContainer()->get(Factory::class);
 
         $res = $validator->validate(
             [
@@ -43,7 +43,7 @@ class FloatRuleTest extends KernelTestCase
 
     public function testFloatWithLongFloats()
     {
-        $validator = self::getContainer()->get(Validator::class);
+        $validator = self::getContainer()->get(Factory::class);
 
         $res = $validator->validate(
             [

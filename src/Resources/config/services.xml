@@ -7,11 +7,9 @@
         <defaults public="false" autowire="true" autoconfigure="true"/>
 
         <!-- Services -->
-        <service id="Rakit\Validation\Validator" class="Rakit\Validation\Validator">
-            <call method="setUseHumanizedKeys">
-                <argument>false</argument>
-            </call>
-        </service>
+        <service id="Somnambulist\Components\Validation\Factory" class="Somnambulist\Components\Validation\Factory" public="true" />
+        <service id="Somnambulist\Components\Validation\MimeTypeGuesser" class="Somnambulist\Components\Validation\MimeTypeGuesser" />
+        <service id="Somnambulist\Components\Validation\MimeTypeGuesser" alias="Somnambulist\Components\Validation\Contracts\MimeTypeGuesser" public="true" />
 
         <service
             id="Somnambulist\Bundles\FormRequestBundle\Services\ControllerArgumentResolver"
@@ -19,41 +17,11 @@
             <tag name="controller.argument_value_resolver" priority="105" />
         </service>
 
-        <!-- Rules -->
-        <service
-            id="Somnambulist\Bundles\FormRequestBundle\Rules\ProhibitedIfRule"
-            class="Somnambulist\Bundles\FormRequestBundle\Rules\ProhibitedIfRule">
-            <tag name="somnambulist.form_request_bundle.rule" rule_name="prohibited_if" />
-        </service>
-        <service
-            id="Somnambulist\Bundles\FormRequestBundle\Rules\ProhibitedRule"
-            class="Somnambulist\Bundles\FormRequestBundle\Rules\ProhibitedRule">
-            <tag name="somnambulist.form_request_bundle.rule" rule_name="prohibited" />
-        </service>
-        <service
-            id="Somnambulist\Bundles\FormRequestBundle\Rules\ProhibitedUnlessRule"
-            class="Somnambulist\Bundles\FormRequestBundle\Rules\ProhibitedUnlessRule">
-            <tag name="somnambulist.form_request_bundle.rule" rule_name="prohibited_unless" />
-        </service>
-        <service
-            id="Somnambulist\Bundles\FormRequestBundle\Rules\UuidRule"
-            class="Somnambulist\Bundles\FormRequestBundle\Rules\UuidRule">
-            <tag name="somnambulist.form_request_bundle.rule" rule_name="uuid" />
-        </service>
+        <!-- Rules - allow usage of UploadedFile objects in validator -->
         <service
             id="Somnambulist\Bundles\FormRequestBundle\Rules\RequiredRule"
             class="Somnambulist\Bundles\FormRequestBundle\Rules\RequiredRule">
             <tag name="somnambulist.form_request_bundle.rule" rule_name="required" />
-        </service>
-        <service
-            id="Somnambulist\Bundles\FormRequestBundle\Rules\TypeFloatRule"
-            class="Somnambulist\Bundles\FormRequestBundle\Rules\TypeFloatRule">
-            <tag name="somnambulist.form_request_bundle.rule" rule_name="float" />
-        </service>
-        <service
-            id="Somnambulist\Bundles\FormRequestBundle\Rules\TypeStringRule"
-            class="Somnambulist\Bundles\FormRequestBundle\Rules\TypeStringRule">
-            <tag name="somnambulist.form_request_bundle.rule" rule_name="string" />
         </service>
         <service
             id="Somnambulist\Bundles\FormRequestBundle\Rules\UploadedFileRule"

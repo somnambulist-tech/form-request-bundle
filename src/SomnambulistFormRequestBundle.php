@@ -2,8 +2,8 @@
 
 namespace Somnambulist\Bundles\FormRequestBundle;
 
-use Rakit\Validation\Rule;
 use Somnambulist\Bundles\FormRequestBundle\DependencyInjection\Compiler\ValidatorRuleCompilerPass;
+use Somnambulist\Components\Validation\Rule;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

@@ -47,31 +47,6 @@ This package includes overrides for the following rules:
  * uploaded_file - validates an uploaded file supporting Symfony UploadedFile files
  * mimes - validates an uploaded file mime-type is one of the given extensions
 
-The following are additional rules:
-
- * uuid - validates a UUID is valid and not NIL (all 0/zeros)
- * float - validates that the value is a floating point number
- * string - validates that the value is a string via `is_string`
- * prohibited - the field is prohibited always
- * prohibited_if - the field is prohibited if, another field has a value
- * prohibited_unless - the field is prohibited, unless the field has a value
-
-Example usage for prohibited:
-
-```php
-// the time is not allowed if the date is false or 0
-$rules = [
-    'date' => 'date',
-    'time' => 'prohibited_if:date,false,0'
-];
-
-// last is not allowed if first is not Bob
-$rules = [
-    'first' => 'required|string',
-    'last' => 'prohibited_unless:first,Bob'
-];
-```
-
 ### Property Pass-Through
 
 The following `ParameterBag`s can be accessed via property accessors or method calls:
@@ -95,7 +70,7 @@ To make a form request, extend the base `Somnambulist\Bundles\FormRequestBundle\
 and override the `rules()` method to add your own validation rules. The `rules` method has access to the
 current request via the `source` property so rules can be constructed using request information.
 
-The validation rules use [rakit/validation](https://github.com/rakit/validation) instead of Symfony's
+The validation rules use [somnambulist/validation](https://github.com/somnambulist-tech/validation) instead of Symfony's
 validation component to allow for easier setup and extension.
 
 For example: to make a form request specifically for validating the data to make a new user you could
@@ -128,7 +103,7 @@ Alternatively: the original request data can be accessed via property pass-throu
 
 ### Using the Form Request
 
-In your controller, instead of type-hinting the standard request type-hint your form request. If
+In your controller, instead of type-hinting the standard request, type-hint your form request. If
 validation succeeds, then the data in the request will be suitable for the controller to use.
 
 For example:
@@ -147,7 +122,7 @@ class CreateUserController extends AbstractController
 }
 ```
 
-`FormRequests` support dot notation access to get to nested values. This can be used for single values,
+`FormRequest`s support dot notation access to get to nested values. This can be used for single values,
 to check for deeply nested values easily or to extract a set of values into a value object or set.
 
 For example: to get a single value: `$form->get('user.address.line_1')` would get `line_1` from a user
@@ -211,22 +186,22 @@ class NewUserFormRequest extends FormRequest
 
 ### Adding Validator Rules
 
-Custom validators can be added by creating a new Rule that extends `Rakit\Validation\Rule`, implementing
-the logic for validation (and any custom messages) and then creating a new service. Rules will be
+Custom validators can be added by creating a new Rule that extends `Somnambulist\Components\Validation\Rule`,
+implementing the logic for validation (and any custom messages) and then creating a new service. Rules will be
 automatically assigned to the validator using the class name without namespace converted to `snake_case`.
-Alternatively individual rules can tagged with `somnambulist.form_request_bundle.rule` and the attribute
+Alternatively individual rules can be tagged with `somnambulist.form_request_bundle.rule` and the attribute
 `rule_name` to set a specific alias for the rule:
 
 For example:
 
 ```php
 <?php
-use Rakit\Validation\Rule;
+use Somnambulist\Components\Validation\Rule;
 use Ramsey\Uuid\Uuid;
 
 class UuidRule extends Rule
 {
-    protected $message = 'The :attribute is not a valid UUID or is NIL';
+    protected string $message = 'The :attribute is not a valid UUID or is NIL';
 
     public function check($value): bool
     {
@@ -247,9 +222,21 @@ Without the tag, this rule would be registered as: `uuid_rule`.
 
 As rules are registered as services you can use other services for database or API checks etc.
 
-See the `rakit` documentation for more details on how to pass arguments and the available rules.
+See the [documentation](https://github.com/somnambulist-tech/validation) for more details on how to pass arguments,
+the available rules, and how to handle translation of messages.
 
-__Note:__ all rules must have unique names and same names will overwrite any pre-existing
+__Note:__ all rules must have unique names and same names will overwrite any pre-existing rules.
+
+__Note:__ several rules are needed internally; if you experience odd behaviour it could be because you changed the
+behaviour of a built-in rule.
+
+### Adding missing mime-types
+
+`somnambulist/validation` includes a mime-type guesser that is registered by default and is available as a service.
+You can add additional mime-types and extensions to this by injecting the service and configuring it, either in a
+boot method or in a service.
+
+Alternatively: the implementation can be replaced entirely provided it implements the `MimeTypeGuesser` interface.
 
 ## Tests
 

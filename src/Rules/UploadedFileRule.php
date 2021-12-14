@@ -2,10 +2,11 @@
 
 namespace Somnambulist\Bundles\FormRequestBundle\Rules;
 
-use Rakit\Validation\Helper;
-use Rakit\Validation\MimeTypeGuesser;
-use Rakit\Validation\Rule;
-use Rakit\Validation\Rules\Traits;
+use Somnambulist\Components\Validation\Contracts\MimeTypeGuesser as MimeTypeGuesserContract;
+use Somnambulist\Components\Validation\Helper;
+use Somnambulist\Components\Validation\MimeTypeGuesser;
+use Somnambulist\Components\Validation\Rule;
+use Somnambulist\Components\Validation\Rules\Behaviours;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use function array_shift;
 use function count;
@@ -24,50 +25,34 @@ use function is_string;
  */
 class UploadedFileRule extends Rule
 {
-    use Traits\FileTrait;
-    use Traits\SizeTrait;
+    use Behaviours\CanValidateFiles;
+    use Behaviours\CanObtainSizeValue;
 
-    /** @var string */
-    protected $message = "The :attribute is not a valid uploaded file";
+    protected string $message = 'rule.uploaded_file';
+    protected MimeTypeGuesserContract $guesser;
 
-    /**
-     * Given $params and assign $this->params
-     *
-     * @param array $params
-     *
-     * @return self
-     */
-    public function fillParameters(array $params): Rule
+    public function __construct(MimeTypeGuesserContract $guesser = null)
     {
+        $this->guesser = $guesser ?? new MimeTypeGuesser();
+    }
+
+    public function fillParameters(array $params): self
+    {
+        if (count($params) < 2) {
+            return $this;
+        }
+
         $this->minSize(array_shift($params));
         $this->maxSize(array_shift($params));
-        $this->fileTypes($params);
+        $this->types($params);
 
         return $this;
     }
 
     /**
-     * Given $size and set the max size
-     *
-     * @param string|int $size
-     *
-     * @return self
+     * Set the minimum filesize
      */
-    public function maxSize($size): Rule
-    {
-        $this->params['max_size'] = $size;
-
-        return $this;
-    }
-
-    /**
-     * Given $size and set the min size
-     *
-     * @param string|int $size
-     *
-     * @return self
-     */
-    public function minSize($size): Rule
+    public function minSize(int|string $size): self
     {
         $this->params['min_size'] = $size;
 
@@ -75,14 +60,19 @@ class UploadedFileRule extends Rule
     }
 
     /**
-     * Given $min and $max then set the range size
-     *
-     * @param string|int $min
-     * @param string|int $max
-     *
-     * @return self
+     * Set the max allowed file size
      */
-    public function sizeBetween($min, $max): Rule
+    public function maxSize(int|string $size): self
+    {
+        $this->params['max_size'] = $size;
+
+        return $this;
+    }
+
+    /**
+     * Set the filesize between the min/max
+     */
+    public function between(int|string $min, int|string $max): self
     {
         $this->minSize($min);
         $this->maxSize($max);
@@ -91,16 +81,12 @@ class UploadedFileRule extends Rule
     }
 
     /**
-     * Given $types and assign $this->params
-     *
-     * @param mixed $types
-     *
-     * @return self
+     * Set the array of allowed types e.g. doc,docx,xls,xlsx
      */
-    public function fileTypes($types): Rule
+    public function types($types): self
     {
         if (is_string($types)) {
-            $types = explode('|', $types);
+            $types = explode(',', $types);
         }
 
         $this->params['allowed_types'] = $types;
@@ -108,27 +94,24 @@ class UploadedFileRule extends Rule
         return $this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function beforeValidate()
     {
-        $attribute = $this->getAttribute();
+        $attribute = $this->attribute();
 
         if (!$attribute->isUsingDotNotation()) {
             return;
         }
 
-        $keys          = explode(".", $attribute->getKey());
+        $keys          = explode('.', $attribute->key());
         $firstKey      = array_shift($keys);
-        $firstKeyValue = $this->validation->getValue($firstKey);
+        $firstKeyValue = $this->validation->input()->get($firstKey);
         $resolvedValue = $this->resolveUploadedFileValue($firstKeyValue);
 
         if (!$resolvedValue) {
             return;
         }
 
-        $this->validation->setValue($firstKey, $resolvedValue);
+        $this->validation->input()->set($firstKey, $resolvedValue);
     }
 
     /**
@@ -144,50 +127,33 @@ class UploadedFileRule extends Rule
         $maxSize      = $this->parameter('max_size');
         $allowedTypes = $this->parameter('allowed_types');
 
-        if ($allowedTypes) {
-            $or = $this->validation ? $this->validation->getTranslation('or') : 'or';
-            $this->setParameterText('allowed_types', Helper::join(Helper::wraps($allowedTypes, "'"), ', ', ", {$or} "));
-        }
-
         // below is Required rule job
         if (!$value->isValid()) {
             return true;
         }
 
-        if ($minSize) {
-            $bytesMinSize = $this->getBytesSize($minSize);
-            if ($value->getSize() < $bytesMinSize) {
-                $this->setMessage('The :attribute file is too small, minimum size is :min_size');
+        if ($minSize && $value->getSize() < $this->getSizeInBytes($minSize)) {
+            $this->message = 'rule.uploaded_file.min_size';
 
-                return false;
-            }
+            return false;
         }
 
-        if ($maxSize) {
-            $bytesMaxSize = $this->getBytesSize($maxSize);
-            if ($value->getSize() > $bytesMaxSize) {
-                $this->setMessage('The :attribute file is too large, maximum size is :max_size');
+        if ($maxSize && $value->getSize() > $this->getSizeInBytes($maxSize)) {
+            $this->message = 'rule.uploaded_file.max_size';
 
-                return false;
-            }
+            return false;
         }
 
-        if (!empty($allowedTypes)) {
-            $guesser = new MimeTypeGuesser;
-            $ext     = $guesser->getExtension($value->getClientMimeType());
-            unset($guesser);
+        if (!empty($allowedTypes) && !in_array($this->guesser->getExtension($value->getClientMimeType()), $allowedTypes)) {
+            $this->message = 'rule.uploaded_file.type';
 
-            if (!in_array($ext, $allowedTypes)) {
-                $this->setMessage('The :attribute file type must be :allowed_types');
-
-                return false;
-            }
+            return false;
         }
 
         return true;
     }
 
-    public function resolveUploadedFileValue($value)
+    public function resolveUploadedFileValue($value): ?array
     {
         if (!$value->isValid()) {
             return null;

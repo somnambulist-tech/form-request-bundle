@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+2021-12-14
+----------
+
+ * replace `rakit/validation` library with `somnambulist/validation`
+   __Note:__ this is a BC break as the API is substantially different
+ * allow Symfony 6.0+
+ 
 2021-11-12
 ----------
 

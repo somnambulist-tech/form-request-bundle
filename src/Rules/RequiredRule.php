@@ -2,7 +2,7 @@
 
 namespace Somnambulist\Bundles\FormRequestBundle\Rules;
 
-use Rakit\Validation\Rule;
+use Somnambulist\Components\Validation\Rule;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use function count;
 use function is_array;
@@ -20,24 +20,14 @@ use function trim;
  */
 class RequiredRule extends Rule
 {
-    /** @var bool */
-    protected $implicit = true;
+    protected bool $implicit = true;
+    protected string $message = 'rule.required';
 
-    /** @var string */
-    protected $message = "The :attribute is required";
-
-    /**
-     * Check the $value is valid
-     *
-     * @param mixed $value
-     *
-     * @return bool
-     */
     public function check($value): bool
     {
-        $this->setAttributeAsRequired();
+        $this->attribute?->makeRequired();
 
-        if ($this->attribute and $this->attribute->hasRule('uploaded_file') && $value instanceof UploadedFile) {
+        if ($this->attribute?->rules()->has('uploaded_file') && $value instanceof UploadedFile) {
             return $value->isValid();
         }
 
@@ -49,17 +39,5 @@ class RequiredRule extends Rule
         }
 
         return !is_null($value);
-    }
-
-    /**
-     * Set attribute is required if $this->attribute is set
-     *
-     * @return void
-     */
-    protected function setAttributeAsRequired()
-    {
-        if ($this->attribute) {
-            $this->attribute->setRequired(true);
-        }
     }
 }

@@ -3,7 +3,7 @@
 namespace Somnambulist\Bundles\FormRequestBundle\Exceptions;
 
 use Exception;
-use Rakit\Validation\ErrorBag;
+use Somnambulist\Components\Validation\ErrorBag;
 
 /**
  * Class FormValidationException
