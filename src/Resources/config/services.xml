@@ -8,8 +8,8 @@
 
         <!-- Services -->
         <service id="Somnambulist\Components\Validation\Factory" class="Somnambulist\Components\Validation\Factory" public="true" />
-        <service id="Somnambulist\Components\Validation\MimeTypeGuesser" class="Somnambulist\Components\Validation\MimeTypeGuesser" />
-        <service id="Somnambulist\Components\Validation\MimeTypeGuesser" alias="Somnambulist\Components\Validation\Contracts\MimeTypeGuesser" public="true" />
+        <service id="Somnambulist\Components\Validation\MimeTypeGuesser" class="Somnambulist\Components\Validation\MimeTypeGuesser" public="true" />
+        <service id="Somnambulist\Components\Validation\MimeTypeGuesser" alias="Somnambulist\Components\Validation\Contracts\MimeTypeGuesser" />
 
         <service
             id="Somnambulist\Bundles\FormRequestBundle\Services\ControllerArgumentResolver"
