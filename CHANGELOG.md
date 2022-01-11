@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+2022-01-11
+----------
+
+ * fix validation error message handling not outputting the actual error messages
+
 2021-12-14
 ----------
 

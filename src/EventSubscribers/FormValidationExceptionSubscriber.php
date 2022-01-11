@@ -3,10 +3,12 @@
 namespace Somnambulist\Bundles\FormRequestBundle\EventSubscribers;
 
 use Somnambulist\Bundles\FormRequestBundle\Exceptions\FormValidationException;
+use Somnambulist\Components\Validation\ErrorMessage;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use function str_replace;
 
 /**
  * Class FormValidationExceptionSubscriber
@@ -19,7 +21,7 @@ class FormValidationExceptionSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::EXCEPTION => ['onKernelException', 15]
+            KernelEvents::EXCEPTION => ['onKernelException', 15],
         ];
     }
 
@@ -42,7 +44,21 @@ class FormValidationExceptionSubscriber implements EventSubscriberInterface
     {
         return new JsonResponse([
             'message' => $exception->getMessage(),
-            'errors'  => $exception->getErrors()->toArray(),
+            'errors'  => $this->processMessages($exception),
         ], JsonResponse::HTTP_BAD_REQUEST);
+    }
+
+    private function processMessages(FormValidationException $exception): array
+    {
+        $ret = [];
+
+        foreach ($exception->getErrors()->toArray() as $field => $errors) {
+            /** @var ErrorMessage $msg */
+            foreach ($errors as $msg) {
+                $ret[$field][str_replace('rule.', '', $msg->key())] = $msg->toString();
+            }
+        }
+
+        return $ret;
     }
 }

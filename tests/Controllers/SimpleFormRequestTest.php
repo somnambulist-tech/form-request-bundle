@@ -41,5 +41,8 @@ class SimpleFormRequestTest extends WebTestCase
         $this->assertArrayHasKey('name', $ret['errors']);
         $this->assertArrayHasKey('email', $ret['errors']);
         $this->assertArrayHasKey('password', $ret['errors']);
+        $this->assertArrayHasKey('min', $ret['errors']['name']);
+        $this->assertArrayHasKey('email', $ret['errors']['email']);
+        $this->assertArrayHasKey('required', $ret['errors']['password']);
     }
 }
