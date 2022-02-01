@@ -9,6 +9,7 @@ use Somnambulist\Bundles\FormRequestBundle\Http\Behaviours\GetNullOrValue;
 use Traversable;
 use function array_keys;
 use function array_values;
+use function is_null;
 use function Somnambulist\Bundles\FormRequestBundle\Resources\arrayGet;
 use function Somnambulist\Bundles\FormRequestBundle\Resources\arrayHas;
 use function Somnambulist\Bundles\FormRequestBundle\Resources\forget;
@@ -52,6 +53,14 @@ class ValidatedDataBag implements Countable, IteratorAggregate
     public function filter(?callable $callback = null): self
     {
         return new self(array_filter($this->params, $callback, ARRAY_FILTER_USE_BOTH));
+    }
+
+    /**
+     * Remove all null valued keys, leaving any that may be false
+     */
+    public function filterNulls(): self
+    {
+        return $this->filter(fn ($v, $k) => !is_null($v));
     }
 
     /**

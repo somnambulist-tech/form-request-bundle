@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+2022-02-01
+----------
+
+ * add `filterNulls()` to `ValidatedDataBag` to complement `prune()`
+
 2022-01-11
 ----------
 

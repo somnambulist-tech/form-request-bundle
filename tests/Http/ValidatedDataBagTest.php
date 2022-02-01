@@ -26,7 +26,7 @@ class ValidatedDataBagTest extends TestCase
                 'state'    => 'State',
                 'postcode' => 'H0H0H0',
             ],
-            'phone'        => '12345678990',
+            'phone'   => '12345678990',
         ]);
 
         $this->assertEquals('123 street', $data->get('address.line_1'));
@@ -42,7 +42,7 @@ class ValidatedDataBagTest extends TestCase
                 'state'    => 'State',
                 'postcode' => 'H0H0H0',
             ],
-            'phone'        => '12345678990',
+            'phone'   => '12345678990',
         ]);
 
         $this->assertTrue($data->has('address.line_1'));
@@ -58,12 +58,27 @@ class ValidatedDataBagTest extends TestCase
                 'state'    => 'State',
                 'postcode' => 'H0H0H0',
             ],
-            'phone'        => '12345678990',
+            'phone'   => '12345678990',
         ]);
 
-        $res = $data->filter(fn ($v, $k) => $k === 'phone');
+        $res = $data->filter(fn($v, $k) => $k === 'phone');
 
         $this->assertCount(1, $res);
+        $this->assertTrue($data->has('phone'));
+    }
+
+    public function testFilterNulls()
+    {
+        $data = new ValidatedDataBag($a = [
+            'name'      => null,
+            'is_active' => 0,
+            'phone'     => '12345678990',
+        ]);
+
+        $res = $data->filterNulls();
+
+        $this->assertCount(2, $res);
+        $this->assertTrue($data->has('is_active'));
         $this->assertTrue($data->has('phone'));
     }
 
