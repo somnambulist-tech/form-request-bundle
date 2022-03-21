@@ -23,7 +23,7 @@ class SomnambulistFormRequestExtension extends Extension
         $loader->load('services.xml');
 
         $configuration = $this->getConfiguration($configs, $container);
-        $config = $this->processConfiguration($configuration, $configs);
+        $config        = $this->processConfiguration($configuration, $configs);
 
         if (false === $config['subscribers']['authorization']) {
             $container->removeDefinition(AccessDeniedExceptionSubscriber::class);

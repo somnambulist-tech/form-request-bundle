@@ -3,6 +3,7 @@
 namespace Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Models;
 
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
@@ -14,19 +15,19 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
  */
 class UserProvider implements UserProviderInterface
 {
-    public function loadUserByUsername(string $username)
+    public function loadUserByIdentifier(string $identifier): UserInterface
     {
         $users = [
             'tester' => new User('tester', 'password', ['ROLE_USER']),
             'admin'  => new User('admin', 'password', ['ROLE_USER', 'ROLE_ADMIN']),
         ];
 
-        return $users[$username] ?? throw new UsernameNotFoundException();
+        return $users[$identifier] ?? throw new UsernameNotFoundException();
     }
 
     public function refreshUser(UserInterface $user)
     {
-        return $this->loadUserByUsername($user->getUsername());
+        return $this->loadUserByIdentifier($user->getUsername());
     }
 
     public function supportsClass(string $class)

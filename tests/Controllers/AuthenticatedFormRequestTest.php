@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class AuthenticatedFormRequestTest extends WebTestCase
 {
-
     use BootTestClient;
     use MakeJsonRequestTo;
 
@@ -57,7 +56,7 @@ class AuthenticatedFormRequestTest extends WebTestCase
     private function fakeLogin(string $user = 'tester'): void
     {
         $this->__kernelBrowserClient->loginUser(
-            $this->__kernelBrowserClient->getContainer()->get(UserProvider::class)->loadUserByUsername($user)
+            $this->__kernelBrowserClient->getContainer()->get(UserProvider::class)->loadUserByIdentifier($user)
         );
     }
 }

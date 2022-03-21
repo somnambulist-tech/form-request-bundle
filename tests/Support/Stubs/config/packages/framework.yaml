@@ -17,10 +17,9 @@ security:
 
     firewalls:
         main:
-            anonymous: true
             lazy: true
 
     access_control:
-        - { path: ^/test/simple, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/test/nested, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/test/simple, roles: PUBLIC_ACCESS }
+        - { path: ^/test/nested, roles: PUBLIC_ACCESS }
         - { path: ^/test/authenticated, roles: IS_AUTHENTICATED_FULLY }

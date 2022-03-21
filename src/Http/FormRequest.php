@@ -13,10 +13,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ServerBag;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Security;
+use function array_replace_recursive;
 use function in_array;
 use function Somnambulist\Bundles\FormRequestBundle\Resources\arrayGet;
 use function Somnambulist\Bundles\FormRequestBundle\Resources\arrayHas;
 use function Somnambulist\Bundles\FormRequestBundle\Resources\forget;
+use function sprintf;
 
 /**
  * Class FormRequest

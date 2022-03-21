@@ -4,7 +4,7 @@ namespace Somnambulist\Bundles\FormRequestBundle\Tests\Services;
 
 use PHPUnit\Framework\TestCase;
 use Somnambulist\Bundles\FormRequestBundle\Http\FormRequest;
-use Somnambulist\Bundles\FormRequestBundle\Services\ControllerArgumentResolver;
+use Somnambulist\Bundles\FormRequestBundle\Services\FormRequestArgumentResolver;
 use Somnambulist\Components\Validation\Factory;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +26,7 @@ class ControllerArgumentResolverTest extends TestCase
         $container = new Container();
         $container->set('security.token_storage', new TokenStorage());
 
-        $resolver = new ControllerArgumentResolver(
+        $resolver = new FormRequestArgumentResolver(
             new Factory(), new Security($container)
         );
         $form = $resolver

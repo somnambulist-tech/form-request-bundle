@@ -12,7 +12,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
-
     private string $username;
     private string $password;
     private array $roles;
@@ -22,6 +21,11 @@ class User implements UserInterface
         $this->username = $username;
         $this->password = $password;
         $this->roles    = $roles;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->getUsername();
     }
 
     public function getUsername(): string

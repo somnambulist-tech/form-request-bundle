@@ -14,12 +14,12 @@ use function is_a;
 use function is_null;
 
 /**
- * Class ControllerArgumentResolver
+ * Class FormRequestArgumentResolver
  *
  * @package    Somnambulist\Bundles\FormRequestBundle\Services
- * @subpackage Somnambulist\Bundles\FormRequestBundle\Services\ControllerArgumentResolver
+ * @subpackage Somnambulist\Bundles\FormRequestBundle\Services\FormRequestArgumentResolver
  */
-class ControllerArgumentResolver implements ArgumentValueResolverInterface
+class FormRequestArgumentResolver implements ArgumentValueResolverInterface
 {
     public function __construct(private Factory $factory, private ?Security $security)
     {
@@ -40,11 +40,11 @@ class ControllerArgumentResolver implements ArgumentValueResolverInterface
 
         $validation = $this->factory->validate($form->all(), $form->rules());
 
+        FormRequest::appendValidationData($form, $validation->getValidData());
+
         if ($validation->fails()) {
             throw new FormValidationException($validation->errors());
         }
-
-        FormRequest::appendValidationData($form, $validation->getValidatedData());
 
         yield $form;
     }

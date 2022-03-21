@@ -12,8 +12,8 @@
         <service id="Somnambulist\Components\Validation\MimeTypeGuesser" alias="Somnambulist\Components\Validation\Contracts\MimeTypeGuesser" />
 
         <service
-            id="Somnambulist\Bundles\FormRequestBundle\Services\ControllerArgumentResolver"
-            class="Somnambulist\Bundles\FormRequestBundle\Services\ControllerArgumentResolver">
+            id="Somnambulist\Bundles\FormRequestBundle\Services\FormRequestArgumentResolver"
+            class="Somnambulist\Bundles\FormRequestBundle\Services\FormRequestArgumentResolver">
             <tag name="controller.argument_value_resolver" priority="105" />
         </service>
 

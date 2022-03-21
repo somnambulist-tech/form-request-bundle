@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+2022-03-11
+----------
+
+ * fix only pass valid data to `ValidatedDataBag`, not all including invalid data
+
 2022-02-01
 ----------
 
