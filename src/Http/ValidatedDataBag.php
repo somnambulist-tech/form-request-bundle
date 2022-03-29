@@ -74,6 +74,22 @@ class ValidatedDataBag implements Countable, IteratorAggregate
     }
 
     /**
+     * Returns the parameter cast to an int, note it must be castable to an int
+     */
+    public function getInt(string $key, int $default = 0): int
+    {
+        return (int)$this->get($key, $default);
+    }
+
+    /**
+     * Returns the parameter cast to a float, note it must be castable to a float
+     */
+    public function getFloat(string $key, float $default = 0): float
+    {
+        return (float)$this->get($key, $default);
+    }
+
+    /**
      * Returns true if the parameter is defined.
      */
     public function has(string ...$key): bool

@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+2022-03-29
+----------
+
+ * add `getInt` and `getFloat` to `ValidatedDataBag`
+
 2022-03-11
 ----------
 

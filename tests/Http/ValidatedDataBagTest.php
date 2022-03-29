@@ -16,7 +16,6 @@ use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Models\ValueObjec
  */
 class ValidatedDataBagTest extends TestCase
 {
-
     public function testGet()
     {
         $data = new ValidatedDataBag($a = [
@@ -33,9 +32,54 @@ class ValidatedDataBagTest extends TestCase
         $this->assertEquals($a['address'], $data->get('address'));
     }
 
-    public function testHas()
+    public function testGetInt()
     {
         $data = new ValidatedDataBag($a = [
+            'total' => '12390',
+            'phone' => '12345678990',
+            'num'   => '02',
+        ]);
+
+        $this->assertEquals(12390, $data->getInt('total'));
+        $this->assertEquals(12345678990, $data->getInt('phone'));
+        $this->assertEquals(2, $data->getInt('num'));
+    }
+
+    public function testGetIntWithDefault()
+    {
+        $data = new ValidatedDataBag($a = [
+            'total' => '12390',
+            'phone' => '12345678990',
+        ]);
+
+        $this->assertEquals(0, $data->getInt('num'));
+        $this->assertEquals(10, $data->getInt('num', 10));
+    }
+
+    public function testGetFloat()
+    {
+        $data = new ValidatedDataBag([
+            'total' => '123.78',
+            'phone' => '9',
+        ]);
+
+        $this->assertIsFloat($data->getFloat('total'));
+        $this->assertEquals(123.78, $data->getFloat('total'));
+        $this->assertEquals(9.0, $data->getFloat('phone'));
+    }
+
+    public function testGetFloatWithDefault()
+    {
+        $data = new ValidatedDataBag([
+            'phone' => '9',
+        ]);
+
+        $this->assertEquals(100.00, $data->getFloat('total', 100.00));
+    }
+
+    public function testHas()
+    {
+        $data = new ValidatedDataBag([
             'address' => [
                 'line_1'   => '123 street',
                 'city'     => 'Some City',
