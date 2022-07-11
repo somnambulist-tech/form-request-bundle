@@ -10,12 +10,6 @@ use function explode;
 use function in_array;
 use function is_string;
 
-/**
- * Class MimeRule
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\Rules
- * @subpackage Somnambulist\Bundles\FormRequestBundle\Rules\MimeRule
- */
 class MimeRule extends Rule
 {
     protected string $message = 'rule.mimes';

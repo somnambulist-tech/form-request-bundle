@@ -4,12 +4,6 @@ namespace Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Forms;
 
 use Somnambulist\Bundles\FormRequestBundle\Http\FormRequest;
 
-/**
- * Class ProductFormRequest
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Forms
- * @subpackage Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Forms\ProductFormRequest
- */
 class ProductFormRequest extends FormRequest
 {
     public function rules(): array

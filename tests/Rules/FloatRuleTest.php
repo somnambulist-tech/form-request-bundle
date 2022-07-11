@@ -6,12 +6,6 @@ use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Behaviours\BootKernel;
 use Somnambulist\Components\Validation\Factory;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-/**
- * Class FloatRuleTest
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\Tests\Rules
- * @subpackage Somnambulist\Bundles\FormRequestBundle\Tests\Rules\FloatRuleTest
- */
 class FloatRuleTest extends KernelTestCase
 {
 

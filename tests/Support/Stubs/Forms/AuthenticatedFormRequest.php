@@ -5,12 +5,6 @@ namespace Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Forms;
 use Somnambulist\Bundles\FormRequestBundle\Http\FormRequest;
 use Symfony\Component\Security\Core\Security;
 
-/**
- * Class AuthenticatedFormRequest
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Forms
- * @subpackage Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Forms\AuthenticatedFormRequest
- */
 class AuthenticatedFormRequest extends FormRequest
 {
 

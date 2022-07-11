@@ -2,12 +2,6 @@
 
 namespace Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Models;
 
-/**
- * Class Address
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Models
- * @subpackage Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Models\Address
- */
 class Address
 {
     public ?string $line1;

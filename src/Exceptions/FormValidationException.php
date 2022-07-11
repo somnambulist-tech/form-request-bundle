@@ -5,12 +5,6 @@ namespace Somnambulist\Bundles\FormRequestBundle\Exceptions;
 use Exception;
 use Somnambulist\Components\Validation\ErrorBag;
 
-/**
- * Class FormValidationException
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\Exceptions
- * @subpackage Somnambulist\Bundles\FormRequestBundle\Exceptions\FormValidationException
- */
 class FormValidationException extends Exception
 {
     private ErrorBag $errors;

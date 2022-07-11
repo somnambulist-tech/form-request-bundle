@@ -2,12 +2,6 @@
 
 namespace Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Models;
 
-/**
- * Class ValueObjectWithNulls
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Models
- * @subpackage Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Models\ValueObjectWithNulls
- */
 class ValueObjectWithNulls
 {
 

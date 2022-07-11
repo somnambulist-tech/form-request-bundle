@@ -12,12 +12,6 @@ use function preg_replace;
 use function strtolower;
 use function ucwords;
 
-/**
- * Class ValidatorRuleCompilerPass
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\DependencyInjection\Compiler
- * @subpackage Somnambulist\Bundles\FormRequestBundle\DependencyInjection\Compiler\ValidatorRuleCompilerPass
- */
 class ValidatorRuleCompilerPass implements CompilerPassInterface
 {
     public const RULE_TAG_NAME = 'somnambulist.form_request_bundle.rule';

@@ -7,12 +7,6 @@ use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Behaviours\BootKernel;
 use Somnambulist\Components\Validation\Factory;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-/**
- * Class UuidRuleTest
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\Tests\Rules
- * @subpackage Somnambulist\Bundles\FormRequestBundle\Tests\Rules\UuidRuleTest
- */
 class UuidRuleTest extends KernelTestCase
 {
 

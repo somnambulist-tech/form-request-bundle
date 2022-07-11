@@ -6,12 +6,6 @@ use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Behaviours\BootKernel;
 use Somnambulist\Components\Validation\Factory;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-/**
- * Class ProhibitedRuleTest
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\Tests\Rules
- * @subpackage Somnambulist\Bundles\FormRequestBundle\Tests\Rules\ProhibitedRuleTest
- */
 class ProhibitedRuleTest extends KernelTestCase
 {
 

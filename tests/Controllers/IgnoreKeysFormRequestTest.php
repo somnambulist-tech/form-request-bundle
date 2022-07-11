@@ -6,12 +6,6 @@ use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Behaviours\BootTestClie
 use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Behaviours\MakeJsonRequestTo;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-/**
- * Class IgnoreKeysFormRequestTest
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\Tests\Controllers
- * @subpackage Somnambulist\Bundles\FormRequestBundle\Tests\Controllers\IgnoreKeysFormRequestTest
- */
 class IgnoreKeysFormRequestTest extends WebTestCase
 {
     use BootTestClient;

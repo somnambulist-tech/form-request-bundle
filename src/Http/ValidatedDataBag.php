@@ -17,12 +17,6 @@ use function Somnambulist\Bundles\FormRequestBundle\Resources\arrayHas;
 use function Somnambulist\Bundles\FormRequestBundle\Resources\forget;
 use const ARRAY_FILTER_USE_BOTH;
 
-/**
- * Class ValidatedDataBag
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\Http
- * @subpackage Somnambulist\Bundles\FormRequestBundle\Http\ValidatedDataBag
- */
 class ValidatedDataBag implements Countable, IteratorAggregate
 {
     use GetNullOrValue;

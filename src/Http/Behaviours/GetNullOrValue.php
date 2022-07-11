@@ -8,14 +8,7 @@ use function Somnambulist\Bundles\FormRequestBundle\Resources\arrayAll;
 use function Somnambulist\Bundles\FormRequestBundle\Resources\arrayGet;
 use function Somnambulist\Bundles\FormRequestBundle\Resources\arrayHas;
 use function Somnambulist\Bundles\FormRequestBundle\Resources\arrayHasWithValue;
-use function sprintf;
 
-/**
- * Trait GetNullOrValue
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\Http\Behaviours
- * @subpackage Somnambulist\Bundles\FormRequestBundle\Http\Behaviours\GetNullOrValue
- */
 trait GetNullOrValue
 {
     /**

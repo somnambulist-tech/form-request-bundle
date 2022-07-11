@@ -9,12 +9,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-/**
- * Class SomnambulistFormRequestExtension
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\DependencyInjection
- * @subpackage Somnambulist\Bundles\FormRequestBundle\DependencyInjection\SomnambulistFormRequestExtension
- */
 class SomnambulistFormRequestExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container)

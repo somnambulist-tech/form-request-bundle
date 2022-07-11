@@ -12,12 +12,6 @@ use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Security;
 
-/**
- * Class ControllerArgumentResolverTest
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\Tests\Services
- * @subpackage Somnambulist\Bundles\FormRequestBundle\Tests\Services\ControllerArgumentResolverTest
- */
 class ControllerArgumentResolverTest extends TestCase
 {
 

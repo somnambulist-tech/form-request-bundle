@@ -21,11 +21,6 @@ use function Somnambulist\Bundles\FormRequestBundle\Resources\forget;
 use function sprintf;
 
 /**
- * Class FormRequest
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\Http
- * @subpackage Somnambulist\Bundles\FormRequestBundle\Http\FormRequest
- *
  * @property ParameterBag    $attributes
  * @property InputBag        $cookies
  * @property FileBag         $files

@@ -2,12 +2,6 @@
 
 namespace Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Models;
 
-/**
- * Class ExternalIdentity
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Models
- * @subpackage Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Models\ExternalIdentity
- */
 class ExternalIdentity
 {
 

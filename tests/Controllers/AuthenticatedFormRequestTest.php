@@ -9,11 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class AuthenticatedFormRequestTest
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\Tests\Controllers
- * @subpackage Somnambulist\Bundles\FormRequestBundle\Tests\Controllers\AuthenticatedFormRequestTest
- *
  * @group auth
  */
 class AuthenticatedFormRequestTest extends WebTestCase

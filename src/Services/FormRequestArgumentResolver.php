@@ -13,12 +13,6 @@ use Symfony\Component\Security\Core\Security;
 use function is_a;
 use function is_null;
 
-/**
- * Class FormRequestArgumentResolver
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\Services
- * @subpackage Somnambulist\Bundles\FormRequestBundle\Services\FormRequestArgumentResolver
- */
 class FormRequestArgumentResolver implements ArgumentValueResolverInterface
 {
     public function __construct(private Factory $factory, private ?Security $security)

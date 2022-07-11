@@ -7,12 +7,6 @@ use Somnambulist\Components\Validation\Rule;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-/**
- * Class SomnambulistFormRequestBundle
- *
- * @package    Somnambulist\Bundles\FormRequestBundle
- * @subpackage Somnambulist\Bundles\FormRequestBundle\SomnambulistFormRequestBundle
- */
 class SomnambulistFormRequestBundle extends Bundle
 {
     public function build(ContainerBuilder $container)

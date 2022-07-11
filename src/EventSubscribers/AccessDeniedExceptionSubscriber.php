@@ -8,12 +8,6 @@ use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-/**
- * Class AccessDeniedExceptionSubscriber
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\EventSubscribers
- * @subpackage Somnambulist\Bundles\FormRequestBundle\EventSubscribers\AccessDeniedExceptionSubscriber
- */
 class AccessDeniedExceptionSubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents()

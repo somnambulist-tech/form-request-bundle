@@ -11,12 +11,7 @@ use function is_string;
 use function trim;
 
 /**
- * Class RequiredRule
- *
  * A re-implementation of the UploadedFile rule to work with Symfony file arrays.
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\Rules
- * @subpackage Somnambulist\Bundles\FormRequestBundle\Rules\RequiredRule
  */
 class RequiredRule extends Rule
 {

@@ -16,12 +16,7 @@ use function in_array;
 use function is_string;
 
 /**
- * Class UploadedFileRule
- *
  * A re-implementation of the UploadedFile rule to work with Symfony file arrays.
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\Rules
- * @subpackage Somnambulist\Bundles\FormRequestBundle\Rules\UploadedFileRule
  */
 class UploadedFileRule extends Rule
 {

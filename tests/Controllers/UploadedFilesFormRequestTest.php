@@ -7,12 +7,6 @@ use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Behaviours\MakeJsonRequ
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-/**
- * Class UploadedFilesFormRequestTest
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\Tests\Controllers
- * @subpackage Somnambulist\Bundles\FormRequestBundle\Tests\Controllers\UploadedFilesFormRequestTest
- */
 class UploadedFilesFormRequestTest extends WebTestCase
 {
 

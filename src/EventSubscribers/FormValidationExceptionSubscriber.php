@@ -10,12 +10,6 @@ use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use function str_replace;
 
-/**
- * Class FormValidationExceptionSubscriber
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\EventSubscribers
- * @subpackage Somnambulist\Bundles\FormRequestBundle\EventSubscribers\FormValidationExceptionSubscriber
- */
 class FormValidationExceptionSubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents()

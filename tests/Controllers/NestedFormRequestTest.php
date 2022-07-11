@@ -6,12 +6,6 @@ use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Behaviours\BootTestClie
 use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Behaviours\MakeJsonRequestTo;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-/**
- * Class NestedFormRequestTest
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\Tests\Controllers
- * @subpackage Somnambulist\Bundles\FormRequestBundle\Tests\Controllers\NestedFormRequestTest
- */
 class NestedFormRequestTest extends WebTestCase
 {
 

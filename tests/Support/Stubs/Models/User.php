@@ -4,12 +4,6 @@ namespace Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Models;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- * Class User
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Models
- * @subpackage Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Models\User
- */
 class User implements UserInterface
 {
     private string $username;

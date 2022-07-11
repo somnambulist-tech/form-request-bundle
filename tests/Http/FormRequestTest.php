@@ -14,12 +14,6 @@ use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Models\ValueObjec
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Class FormRequestTest
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\Tests\Http
- * @subpackage Somnambulist\Bundles\FormRequestBundle\Tests\Http\FormRequestTest
- */
 class FormRequestTest extends TestCase
 {
 

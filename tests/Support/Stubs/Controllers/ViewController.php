@@ -11,12 +11,6 @@ use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Forms\UserFormReq
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-/**
- * Class ViewController
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Controllers
- * @subpackage Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Controllers\ViewController
- */
 class ViewController extends AbstractController
 {
 

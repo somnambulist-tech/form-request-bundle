@@ -8,12 +8,6 @@ use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Models\Address;
 use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Models\ExternalIdentity;
 use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Models\ValueObjectWithNulls;
 
-/**
- * Class ValidatedDataBagTest
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\Tests\Http
- * @subpackage Somnambulist\Bundles\FormRequestBundle\Tests\Http\ValidatedDataBagTest
- */
 class ValidatedDataBagTest extends TestCase
 {
     public function testGet()

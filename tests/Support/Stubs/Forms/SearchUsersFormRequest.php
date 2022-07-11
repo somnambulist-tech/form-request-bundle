@@ -4,12 +4,6 @@ namespace Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Forms;
 
 use Somnambulist\Bundles\FormRequestBundle\Http\FormRequest;
 
-/**
- * Class SearchUsersFormRequest
- *
- * @package    Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Forms
- * @subpackage Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Forms\SearchUsersFormRequest
- */
 class SearchUsersFormRequest extends FormRequest
 {
     protected array $ignore = ['page', 'per_page', 'include'];
