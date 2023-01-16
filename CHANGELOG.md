@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+2023-01-16
+----------
+
+ * additional return types for event subscribers
+
 2022-07-26
 ----------
 

@@ -12,7 +12,7 @@ use function str_replace;
 
 class FormValidationExceptionSubscriber implements EventSubscriberInterface
 {
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             KernelEvents::EXCEPTION => ['onKernelException', 15],
