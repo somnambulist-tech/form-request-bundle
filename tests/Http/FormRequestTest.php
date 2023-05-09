@@ -13,6 +13,7 @@ use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Models\ExternalId
 use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Models\ValueObjectWithNulls;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
+use function method_exists;
 
 class FormRequestTest extends TestCase
 {
@@ -26,12 +27,19 @@ class FormRequestTest extends TestCase
         $this->assertSame($r->attributes, $form->attributes);
         $this->assertSame($r->files, $form->files);
         $this->assertSame($r->server, $form->server);
+        $this->assertSame($r->request, $form->payload);
 
         $this->assertSame($r->query, $form->query());
         $this->assertSame($r->request, $form->request());
         $this->assertSame($r->attributes, $form->attributes());
         $this->assertSame($r->files, $form->files());
         $this->assertSame($r->server, $form->server());
+
+        if (method_exists($r, 'getPayload')) {
+            $this->assertSame($r->getPayload(), $form->payload());
+        } else {
+            $this->assertSame($r->request, $form->payload());
+        }
     }
 
     public function testMagicContentPassThrough()

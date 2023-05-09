@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+2023-05-09
+----------
+
+ * add `payload` to FormRequest for SF 6.3
+
 2023-01-16
 ----------
 

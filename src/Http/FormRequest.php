@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Security;
 use function array_replace_recursive;
 use function in_array;
+use function method_exists;
 use function Somnambulist\Bundles\FormRequestBundle\Resources\arrayGet;
 use function Somnambulist\Bundles\FormRequestBundle\Resources\arrayHas;
 use function Somnambulist\Bundles\FormRequestBundle\Resources\forget;
@@ -25,6 +26,7 @@ use function sprintf;
  * @property InputBag        $cookies
  * @property FileBag         $files
  * @property HeaderBag       $headers
+ * @property InputBag        $payload
  * @property InputBag        $query
  * @property InputBag        $request
  * @property ServerBag       $server
@@ -35,6 +37,7 @@ use function sprintf;
  * @method InputBag        cookies()
  * @method FileBag         files()
  * @method HeaderBag       headers()
+ * @method InputBag        payload()
  * @method InputBag        query()
  * @method InputBag        request()
  * @method ServerBag       server()
@@ -66,20 +69,23 @@ abstract class FormRequest
 
     public function __call(string $name, array $arguments)
     {
-        if (in_array($name, $this->passThrough)) {
-            return $this->source->$name;
-        }
-        if ('session' === $name) {
-            return $this->source->getSession();
-        }
-        if ('content' === $name) {
-            return $this->source->getContent();
+        if (null !== $value = $this->getDataFromMagicCall($name)) {
+            return $value;
         }
 
         throw new BadMethodCallException(sprintf('Method "%s" does not exist', $name));
     }
 
     public function __get(string $name)
+    {
+        if (null !== $value = $this->getDataFromMagicCall($name)) {
+            return $value;
+        }
+
+        throw new InvalidArgumentException(sprintf('Property "%s" not defined', $name));
+    }
+
+    private function getDataFromMagicCall(string $name): mixed
     {
         if (in_array($name, $this->passThrough)) {
             return $this->source->$name;
@@ -90,8 +96,16 @@ abstract class FormRequest
         if ('content' === $name) {
             return $this->source->getContent();
         }
+        if ('payload' === $name) {
+            // SF 6.3
+            if (method_exists($this->source, 'getPayload')) {
+                return $this->source->getPayload();
+            }
 
-        throw new InvalidArgumentException(sprintf('Property "%s" not defined', $name));
+            return $this->source->request;
+        }
+
+        return null;
     }
 
     /**
