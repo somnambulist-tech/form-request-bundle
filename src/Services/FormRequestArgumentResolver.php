@@ -5,15 +5,15 @@ namespace Somnambulist\Bundles\FormRequestBundle\Services;
 use Somnambulist\Bundles\FormRequestBundle\Exceptions\FormValidationException;
 use Somnambulist\Bundles\FormRequestBundle\Http\FormRequest;
 use Somnambulist\Components\Validation\Factory;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
+use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\Security\Core\Security;
 use function is_a;
 use function is_null;
 
-class FormRequestArgumentResolver implements ArgumentValueResolverInterface
+class FormRequestArgumentResolver implements ValueResolverInterface
 {
     public function __construct(private Factory $factory, private ?Security $security)
     {

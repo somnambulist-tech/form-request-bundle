@@ -18,12 +18,12 @@ class UserProvider implements UserProviderInterface
         return $users[$identifier] ?? throw new UserNotFoundException();
     }
 
-    public function refreshUser(UserInterface $user)
+    public function refreshUser(UserInterface $user): UserInterface
     {
         return $this->loadUserByIdentifier($user->getUsername());
     }
 
-    public function supportsClass(string $class)
+    public function supportsClass(string $class): bool
     {
         return is_a($class, User::class, true);
     }

@@ -42,7 +42,7 @@ class User implements UserInterface
         return '';
     }
 
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
 
     }

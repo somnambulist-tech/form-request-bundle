@@ -6,11 +6,11 @@ use PHPUnit\Framework\TestCase;
 use Somnambulist\Bundles\FormRequestBundle\Http\FormRequest;
 use Somnambulist\Bundles\FormRequestBundle\Services\FormRequestArgumentResolver;
 use Somnambulist\Components\Validation\Factory;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Symfony\Component\Security\Core\Security;
 
 class ControllerArgumentResolverTest extends TestCase
 {

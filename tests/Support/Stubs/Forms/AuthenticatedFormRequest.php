@@ -3,7 +3,7 @@
 namespace Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Forms;
 
 use Somnambulist\Bundles\FormRequestBundle\Http\FormRequest;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class AuthenticatedFormRequest extends FormRequest
 {
