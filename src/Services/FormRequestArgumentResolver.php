@@ -26,6 +26,10 @@ class FormRequestArgumentResolver implements ValueResolverInterface
 
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
+        if (!is_a($argument->getType(), FormRequest::class, true)) {
+            return [];
+        }
+
         $form = $this->createFormInstance($request, $argument);
 
         if (!is_null($this->security) && !$form->authorize($this->security)) {
