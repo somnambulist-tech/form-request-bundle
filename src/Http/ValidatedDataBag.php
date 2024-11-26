@@ -102,7 +102,7 @@ class ValidatedDataBag implements Countable, IteratorAggregate
     /**
      * Return the specified value for the field(s) or null, or return a new class of just those fields
      */
-    public function nullOrValue(array $fields, string $class = null, bool $subNull = false): mixed
+    public function nullOrValue(array $fields, ?string $class = null, bool $subNull = false): mixed
     {
         return $this->doGetNullOrValue($this->params, $fields, $class, $subNull);
     }

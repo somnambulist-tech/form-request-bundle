@@ -228,7 +228,7 @@ abstract class FormRequest
      *
      * @return mixed
      */
-    public function nullOrValue(string $bag, array $fields, string $class = null, bool $subNull = false): mixed
+    public function nullOrValue(string $bag, array $fields, ?string $class = null, bool $subNull = false): mixed
     {
         if (!$this->$bag instanceof ParameterBag) {
             throw new InvalidArgumentException(sprintf('Bag "%s" is not a ParameterBag instance', $bag));

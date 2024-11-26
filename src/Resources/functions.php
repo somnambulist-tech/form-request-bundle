@@ -116,7 +116,6 @@ function arrayHas(array $array, array $keys): bool
     return true;
 }
 
-
 /**
  * @param array $array
  * @param array $keys

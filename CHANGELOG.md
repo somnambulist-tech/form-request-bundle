@@ -1,6 +1,16 @@
 Change Log
 ==========
 
+2024-11-27
+----------
+ 
+ * fix PHP 8.4 deprecations
+
+2024-06-12
+----------
+ 
+ * add additional suggested return types
+
 2024-02-24
 ----------
  

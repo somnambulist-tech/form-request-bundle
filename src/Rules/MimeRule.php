@@ -15,7 +15,7 @@ class MimeRule extends Rule
     protected string $message = 'rule.mimes';
     protected MimeTypeGuesserContract $guesser;
 
-    public function __construct(MimeTypeGuesserContract $guesser = null)
+    public function __construct(?MimeTypeGuesserContract $guesser = null)
     {
         $this->guesser = $guesser ?? new MimeTypeGuesser();
     }
