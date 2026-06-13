@@ -82,3 +82,4 @@ Temporary Items
 .apdisk
 /.phpunit.result.cache
 /.phpunit.cache
+phpunit.xml

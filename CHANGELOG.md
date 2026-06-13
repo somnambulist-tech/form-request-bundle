@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+2026-06-13
+----------
+ 
+ * require Symfony 7/8
+ * require PHP 8.4+
+ * update to PHPUnit 12.4
+
 2024-11-27
 ----------
  

@@ -2,6 +2,7 @@
 
 namespace Somnambulist\Bundles\FormRequestBundle\Tests\Support\Behaviours;
 
+use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Kernel;
 use Symfony\Component\BrowserKit\AbstractBrowser;
 use function method_exists;
 
@@ -16,15 +17,13 @@ use function method_exists;
  */
 trait BootTestClient
 {
+    protected ?AbstractBrowser $__kernelBrowserClient = null;
 
-    /**
-     * @var AbstractBrowser
-     */
-    protected $__kernelBrowserClient;
+    protected static function getKernelClass(): string
+    {
+        return Kernel::class;
+    }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function setUp(): void
     {
         if (method_exists($this, 'setKernelClass')) {

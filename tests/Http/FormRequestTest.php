@@ -13,7 +13,6 @@ use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Models\ExternalId
 use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Models\ValueObjectWithNulls;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
-use function method_exists;
 
 class FormRequestTest extends TestCase
 {

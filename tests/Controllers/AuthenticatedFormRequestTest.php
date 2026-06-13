@@ -2,15 +2,14 @@
 
 namespace Somnambulist\Bundles\FormRequestBundle\Tests\Controllers;
 
+use PHPUnit\Framework\Attributes\Group;
 use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Behaviours\BootTestClient;
 use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Behaviours\MakeJsonRequestTo;
 use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Stubs\Models\UserProvider;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @group auth
- */
+#[Group("auth")]
 class AuthenticatedFormRequestTest extends WebTestCase
 {
     use BootTestClient;

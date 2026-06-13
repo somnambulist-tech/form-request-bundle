@@ -2,6 +2,7 @@
 
 namespace Somnambulist\Bundles\FormRequestBundle\Tests\Support\Behaviours;
 
+use Somnambulist\Bundles\FormRequestBundle\Tests\Support\Kernel;
 use function method_exists;
 
 /**
@@ -15,6 +16,10 @@ use function method_exists;
  */
 trait BootKernel
 {
+    protected static function getKernelClass(): string
+    {
+        return Kernel::class;
+    }
 
     protected function setUp(): void
     {

@@ -11,7 +11,7 @@ An implementation of form requests from Laravel for Symfony based on the origina
 
 ## Requirements
 
- * PHP 8.0+
+ * PHP 8.4+
  * symfony/framework-bundle
 
 ## Installation
@@ -240,4 +240,4 @@ Alternatively: the implementation can be replaced entirely provided it implement
 
 ## Tests
 
-PHPUnit 9+ is used for testing. Run tests via `vendor/bin/phpunit`.
+PHPUnit 12+ is used for testing. Run tests via `vendor/bin/phpunit`.

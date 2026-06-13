@@ -8,7 +8,6 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class NestedFormRequestTest extends WebTestCase
 {
-
     use BootTestClient;
     use MakeJsonRequestTo;
 

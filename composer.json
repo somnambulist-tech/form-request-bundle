@@ -1,6 +1,5 @@
 {
     "name": "somnambulist/form-request-bundle",
-    "type": "symfony-bundle",
     "description": "Adds Laravel like form requests for Symfony; based on adamsafr/form-request-bundle",
     "keywords": [
         "form request",
@@ -13,19 +12,20 @@
             "email": "info@somnambulist.tech"
         }
     ],
+    "type": "symfony-bundle",
     "require": {
-        "php": ">=8.1",
-        "somnambulist/validation": "^1.4",
-        "symfony/framework-bundle": "^6.4|^7.0"
+        "php": ">=8.4",
+        "somnambulist/validation": "^1.12",
+        "symfony/framework-bundle": "^7.0|^8.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^10.5",
-        "ramsey/uuid": "^4.7",
-        "symfony/browser-kit": "^6.4",
-        "symfony/security-bundle": "^6.4",
-        "symfony/stopwatch": "^6.4",
-        "symfony/var-dumper": "^6.4",
-        "symfony/yaml": "^6.4"
+        "phpunit/phpunit": "^12.4",
+        "ramsey/uuid": "^4.9",
+        "symfony/browser-kit": "^7.0|^8.0",
+        "symfony/security-bundle": "^7.0|^8.0",
+        "symfony/stopwatch": "^7.0|^8.0",
+        "symfony/var-dumper": "^7.0|^8.0",
+        "symfony/yaml": "^7.0|^8.0"
     },
     "autoload": {
         "psr-4": {
